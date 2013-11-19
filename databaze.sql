@@ -10,7 +10,7 @@ CREATE DATABASE `nemocnice`  DEFAULT CHARSET=utf8;
 -- Pro umozneni prihlasovani uzivatelu jsou tabulky lekar a sestra spojeny v
 -- jednu tabulku zamestnanec. Tato tabulka zachovava vsechny puvodni atributy
 -- jak lekare tak setry. Krom toho obsahuje navic atributy usermane, password
--- a typ zamestnance (lekar, sestra, administrator).
+-- a role zamestnance (lekar, sestra, administrator).
 -- Nesrovnalost je v atributu ciziho klice zkratkaOdd, ktery nebyl nastaven
 -- jako cizi klic, protoze v pripade zaznamu lekar/administrator je nulovy
 
@@ -22,7 +22,7 @@ CREATE TABLE `nemocnice`.`zamestnanec` (
   `password` char(60),
   `jmeno` varchar(50) NOT NULL,
   `prijmeni` varchar(50) NOT NULL,
-  `typ` varchar(20) NOT NULL,
+  `role` varchar(20) NOT NULL,
   `zkratkaOdd` varchar(50),  -- v pripade sestry slouzi jako cizi klic - nutno hlidat pomoci trigru!
   UNIQUE KEY `username` (`username`),
   PRIMARY KEY (`IDzamestnance`)
@@ -79,7 +79,7 @@ CREATE TABLE `nemocnice`.`uvazek` (
   `IDlekare` int(10) unsigned NOT NULL,
   `zkratkaOdd` varchar(50) NOT NULL,
   `telefon` char(9) NOT NULL,
-  `typUvazku` varchar(50) NOT NULL,
+  `roleUvazku` varchar(50) NOT NULL,
   PRIMARY KEY (`IDlekare`, `zkratkaOdd`),
   CONSTRAINT `fk_lekarUvazku` FOREIGN KEY (`IDlekare`) REFERENCES `zamestnanec` (`IDzamestnance`),
   CONSTRAINT `fk_oddeleniUvazku` FOREIGN KEY (`zkratkaOdd`) REFERENCES `oddeleni` (`zkratkaOdd`)
@@ -123,8 +123,8 @@ CREATE TABLE `nemocnice`.`podaniLeku` (
 -- TODO opravit datumy tak, aby vkládaly hodnotu místo nul
 
 -- Administrator
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `jmeno`, `prijmeni`, `typ`) VALUES
-('admin0', 'Admin', 'Administrator', 'administrator');
+INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
+('admin0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Admin', 'Administrator', 'administrator');
 
 -- Pacient
 INSERT INTO `nemocnice`.`pacient` (`rodneCislo`, `jmeno`, `prijmeni`) VALUES
@@ -132,9 +132,9 @@ INSERT INTO `nemocnice`.`pacient` (`rodneCislo`, `jmeno`, `prijmeni`) VALUES
 ('4505061122', 'Martin', 'Pisin');
 
 -- Lekar
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `jmeno`, `prijmeni`, `typ`) VALUES
-('rusek0','Jan', 'Rusek', 'lekar'),
-('malym0', 'Michal', 'Maly', 'lekar');
+INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
+('rusek0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW','Jan', 'Rusek', 'lekar'),
+('malym0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Michal', 'Maly', 'lekar');
 
 -- Oddeleni
 INSERT INTO `nemocnice`.`oddeleni` (`zkratkaOdd`, `nazev`) VALUES
@@ -147,9 +147,9 @@ INSERT INTO `nemocnice`.`lek` (`nazev`, `pouziti`, `zpusobPodani`, `ucinnaLatka`
 ('Ibalgin', 'horecka', 'analne, oralne', 'Ibuprofen', 500, 'Ipsum lorem');
 
 -- Sestra
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `jmeno`, `prijmeni`, `typ`, `zkratkaOdd`) VALUES
-('kodyt0', 'Marta', 'Kodytkova', 'sestra', 'ARO'),
-('bobko0', 'Petra', 'Bobkova', 'sestra', 'JIP');
+INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`, `zkratkaOdd`) VALUES
+('kodyt0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Marta', 'Kodytkova', 'sestra', 'ARO'),
+('bobko0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Petra', 'Bobkova', 'sestra', 'JIP');
 
 -- Hospitalizace
 INSERT INTO `nemocnice`.`hospitalizace` (`datumPrijeti`, `datumPropusteni`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
@@ -157,7 +157,7 @@ INSERT INTO `nemocnice`.`hospitalizace` (`datumPrijeti`, `datumPropusteni`, `zkr
 (2013-03-08, 2013-02-15, 'JIP', 3, '4505061122');
 
 -- Uvazek
-INSERT INTO `nemocnice`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `typUvazku`) VALUES
+INSERT INTO `nemocnice`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvazku`) VALUES
 (2,'ARO','777666555','Plny'),
 (3,'JIP','777666444','Polovicni');
 
