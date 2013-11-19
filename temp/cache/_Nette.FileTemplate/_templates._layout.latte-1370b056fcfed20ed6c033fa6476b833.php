@@ -1,30 +1,30 @@
-<?php //netteCache[01]000366a:2:{s:4:"time";s:21:"0.81004500 1384809145";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:44:"/var/www/projekt/app/templates/@layout.latte";i:2;i:1384809142;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"80a7e46 released on 2013-08-08";}}}?><?php
+<?php //netteCache[01]000366a:2:{s:4:"time";s:21:"0.50609900 1384870413";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:44:"/var/www/projekt/app/templates/@layout.latte";i:2;i:1384870410;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"80a7e46 released on 2013-08-08";}}}?><?php
 
 // source file: /var/www/projekt/app/templates/@layout.latte
 
 ?><?php
 // prolog Nette\Latte\Macros\CoreMacros
-list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, '8s0d74u30d')
+list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 'cwfyl2hiz2')
 ;
 // prolog Nette\Latte\Macros\UIMacros
 //
 // block title
 //
-if (!function_exists($_l->blocks['title'][] = '_lb11703adb40_title')) { function _lb11703adb40_title($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['title'][] = '_lbc42752915b_title')) { function _lbc42752915b_title($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block head
 //
-if (!function_exists($_l->blocks['head'][] = '_lb4f3b10fa17_head')) { function _lb4f3b10fa17_head($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['head'][] = '_lb46e5eed36e_head')) { function _lb46e5eed36e_head($_l, $_args) { extract($_args)
 ;
 }}
 
 //
 // block scripts
 //
-if (!function_exists($_l->blocks['scripts'][] = '_lb4dc3945e60_scripts')) { function _lb4dc3945e60_scripts($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['scripts'][] = '_lbd16fc17da7_scripts')) { function _lbd16fc17da7_scripts($_l, $_args) { extract($_args)
 ?>        <script src="<?php echo htmlSpecialChars($basePath) ?>/js/jquery.js"></script>
         <script src="<?php echo htmlSpecialChars($basePath) ?>/js/netteForms.js"></script>
         <script src="<?php echo htmlSpecialChars($basePath) ?>/js/main.js"></script>
@@ -100,8 +100,13 @@ ob_start(); call_user_func(reset($_l->blocks['title']), $_l, get_defined_vars())
 ">Pacienti</a>
                         <li><a href="<?php echo htmlSpecialChars($_control->link("Hospitalizace:")) ?>
 ">Hospitalizace</a>
+<?php if ($user->isInRole('lekar') or $user->isInRole('administrator')): ?>
                         <li><a href="<?php echo htmlSpecialChars($_control->link("Leky:")) ?>
 ">Databáze léků</a>
+<?php endif ;if ($user->isInRole('administrator')): ?>
+                        <li><a href="<?php echo htmlSpecialChars($_control->link("Zamestnanec:all")) ?>
+">Zaměstnanci</a>
+<?php endif ?>
                     </ul>
 <?php endif ?>
             </div>

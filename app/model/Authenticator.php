@@ -25,19 +25,19 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
      */
     public function authenticate(array $credentials) {
         list($username, $password) = $credentials;
-        
+
         $row = $this->zamestnanec->findByName($username);
 
         if (!$row) {
             throw new Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
         }
 
-       /* if ($row->password !== $this->calculateHash($password, $row->password)) {
+        if ($row->password !== $this->calculateHash($password, $row->password)) {
             throw new Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
-        }*/
+        }
 
         unset($row->password);
-        return new Security\Identity($row->IDzamestnance, NULL, $row->toArray());
+        return new Security\Identity($row->IDzamestnance, $row->role, $row->toArray());
     }
 
     /**
@@ -45,10 +45,10 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
      * @param  string $password
      */
     public function setPassword($id, $password) {
-      $this->zamestnanec->findBy(array('IDzamestnance' => $id))->update(array(
-      'password' => $this->calculateHash($password),
-      ));
-      } 
+        $this->zamestnanec->findBy(array('IDzamestnance' => $id))->update(array(
+            'password' => $this->calculateHash($password),
+        ));
+    }
 
     /**
      * Computes salted password hash.
