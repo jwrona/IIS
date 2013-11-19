@@ -19,6 +19,9 @@ common:
 			dsn: 'mysql:host=localhost;dbname=nemocnice'
 			user: 'root'
 			password: 'Jarad456'
+#			dsn: 'mysql:host=localhost;dbname=nemocnice'
+#			user: 'root'
+#			password: 'Jarad456'
 
 		session:
 			autoStart: smart
