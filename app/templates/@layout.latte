@@ -35,7 +35,7 @@
 <!-- navigacni panel -->
             <div id="sidebar">
                 {if $user->isLoggedIn()}
-                    <h2>Zaměstnanec</h2>
+                    <h2>{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</h2>
                     <ul>
                         <li><a n:href="Pacienti:">Pacienti</a>
                         <li><a n:href="Hospitalizace:">Hospitalizace</a>

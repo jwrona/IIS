@@ -1,21 +1,34 @@
-<?php //netteCache[01]000375a:2:{s:4:"time";s:21:"0.48353700 1384710643";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:53:"/var/www/projekt/app/templates/Homepage/default.latte";i:2;i:1384710639;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"80a7e46 released on 2013-08-08";}}}?><?php
+<?php //netteCache[01]000375a:2:{s:4:"time";s:21:"0.66874500 1384872691";s:9:"callbacks";a:2:{i:0;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:9:"checkFile";}i:1;s:53:"/var/www/projekt/app/templates/Homepage/default.latte";i:2;i:1384872689;}i:1;a:3:{i:0;a:2:{i:0;s:19:"Nette\Caching\Cache";i:1;s:10:"checkConst";}i:1;s:25:"Nette\Framework::REVISION";i:2;s:30:"80a7e46 released on 2013-08-08";}}}?><?php
 
 // source file: /var/www/projekt/app/templates/Homepage/default.latte
 
 ?><?php
 // prolog Nette\Latte\Macros\CoreMacros
-list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 'jrhiuqezny')
+list($_l, $_g) = Nette\Latte\Macros\CoreMacros::initRuntime($template, 'dqbyy7k7os')
 ;
 // prolog Nette\Latte\Macros\UIMacros
 //
 // block content
 //
-if (!function_exists($_l->blocks['content'][] = '_lbff935d2868_content')) { function _lbff935d2868_content($_l, $_args) { extract($_args)
+if (!function_exists($_l->blocks['content'][] = '_lbbea0565e76_content')) { function _lbbea0565e76_content($_l, $_args) { extract($_args)
 ?><!-- <h1 n:block="title">Přehled úkolů</h1> -->
 
-<h2>Obsah Přihlášeného uživatele</h2>
-<h3>Nastaveno v Homepage default.latte</h3>
-
+<?php if ($user->isLoggedIn()): ?>
+    <h2>Informační systém nemocnice poskytuje následující činnosti:</h2>
+    <ul>
+        <li><a href="<?php echo htmlSpecialChars($_control->link("Pacienti:")) ?>
+">Databáze registrovaných pacientů</a>
+        <li><a href="<?php echo htmlSpecialChars($_control->link("Hospitalizace:")) ?>
+">Aktuálně hospitalizovaní pacienti</a>
+<?php if ($user->isInRole('lekar') or $user->isInRole('administrator')): ?>
+            <li><a href="<?php echo htmlSpecialChars($_control->link("Leky:")) ?>
+">Databáze léků</a>
+<?php endif ;if ($user->isInRole('administrator')): ?>
+            <li><a href="<?php echo htmlSpecialChars($_control->link("Zamestnanec:all")) ?>
+">Přehled všech zaměstnanců</a>
+<?php endif ?>
+    </ul>
+<?php endif ?>
 
 <?php
 }}

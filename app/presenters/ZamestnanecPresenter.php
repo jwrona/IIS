@@ -10,7 +10,7 @@ class ZamestnanecPresenter extends BasePresenter {
     /** @var Todo\UserRepository */
     protected $zamestnanecRepository;
     protected $uvazekRepository;
-    protected $text = "Ahoj";
+    protected $zamestnanci;
 
     /** @var Todo\Authenticator */
     private $authenticator;
@@ -23,6 +23,10 @@ class ZamestnanecPresenter extends BasePresenter {
         $this->zamestnanecRepository = $this->context->zamestnanecRepository;
         $this->uvazekRepository = $this->context->uvazekRepository;
         $this->authenticator = $this->context->authenticator;
+    }
+
+    public function renderAll() {
+        $this->template->zamestnanci = $this->zamestnanecRepository->findAll();
     }
 
     protected function createComponentPasswordForm() {
@@ -51,15 +55,16 @@ class ZamestnanecPresenter extends BasePresenter {
             $form->addError('Zadané heslo není správné.');
         }
     }
-    
+
     protected function createComponentUserDetailForm() {
         $form = new Form();
-        $form->addText('jmeno','Jméno',50,50)->setValue($this->user->getIdentity()->jmeno);
-        $form->addText('prijmeni','Příjmení',50,50)->setValue($this->user->getIdentity()->prijmeni);
+        $form->addText('jmeno', 'Jméno', 50, 50)->setValue($this->user->getIdentity()->jmeno);
+        $form->addText('prijmeni', 'Příjmení', 50, 50)->setValue($this->user->getIdentity()->prijmeni);
         $form->addSelect('uvazek', 'Úvazek', $this->uvazekRepository->najdiUvazky($this->getUser()->getId()));
         $form->addSubmit('set', 'Potvrdit');
         echo $this->getUser()->getId();
         //$form->onSuccess[] = $this->passwordFormSubmitted;
         return $form;
     }
+
 }
