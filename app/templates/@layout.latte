@@ -21,7 +21,7 @@
                 {if $user->isLoggedIn()}
                     <div class="user">
                         <span class="icon user"></span>
-                        <a n:href="Zamestnanec:">{$user->getIdentity()->username}</a> |
+                        <a n:href="Zamestnanec:detail $user->getId()">{$user->getIdentity()->username}</a> |
                         <a n:href="Zamestnanec:password">Změna hesla</a> |
                         <a n:href="signOut!">Odhlásit se</a>
                     </div>

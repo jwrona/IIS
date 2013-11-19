@@ -10,7 +10,6 @@ class ZamestnanecPresenter extends BasePresenter {
     /** @var Todo\UserRepository */
     protected $zamestnanecRepository;
     protected $uvazekRepository;
-    protected $zamestnanci;
 
     /** @var Todo\Authenticator */
     private $authenticator;
@@ -26,7 +25,24 @@ class ZamestnanecPresenter extends BasePresenter {
     }
 
     public function renderAll() {
-        $this->template->zamestnanci = $this->zamestnanecRepository->findAll();
+        $this->template->lekari = $this->zamestnanecRepository->findDoctors();
+        $this->template->sestry = $this->zamestnanecRepository->findNurses();
+        $this->template->administratori = $this->zamestnanecRepository->findAdministrators();
+    }
+
+    public function renderDetail($IDzamestnance) {
+        $this->template->zamestnanec = $this->zamestnanecRepository->findByIDzamestnance($IDzamestnance);
+        $this->template->uvazky = $this->uvazekRepository->findByIDzamestnance($IDzamestnance);
+    }
+
+    public function renderEdit($IDzamestnance) {
+        $this->template->zamestnanec = $this->zamestnanecRepository->findByIDzamestnance($IDzamestnance);
+        $this->template->uvazky = $this->uvazekRepository->findByIDzamestnance($IDzamestnance);
+    }
+    
+    public function actionDelete($IDzamestnance){
+        $this->flashMessage('Uživatel má být vymazán.', 'success');
+        $this->setView('all');
     }
 
     protected function createComponentPasswordForm() {
@@ -56,15 +72,19 @@ class ZamestnanecPresenter extends BasePresenter {
         }
     }
 
-    protected function createComponentUserDetailForm() {
+    protected function createComponentUserEditForm() {
         $form = new Form();
-        $form->addText('jmeno', 'Jméno', 50, 50)->setValue($this->user->getIdentity()->jmeno);
-        $form->addText('prijmeni', 'Příjmení', 50, 50)->setValue($this->user->getIdentity()->prijmeni);
-        $form->addSelect('uvazek', 'Úvazek', $this->uvazekRepository->najdiUvazky($this->getUser()->getId()));
-        $form->addSubmit('set', 'Potvrdit');
-        echo $this->getUser()->getId();
-        //$form->onSuccess[] = $this->passwordFormSubmitted;
+        $form->addText('jmeno', 'Jméno', 50, 50);
+        $form->addText('prijmeni', 'Příjmení', 50, 50);
+        $form->addText('username', 'Username', 50, 50);
+        $form->addSubmit('set', 'Uložit');
+        $form->onSuccess[] = $this->userEditSubmitted;
         return $form;
+    }
+
+    public function userEditSubmitted(Form $form) {
+        $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
+        $this->redirect('Zamestnanec:all');
     }
 
 }

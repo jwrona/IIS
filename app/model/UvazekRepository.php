@@ -14,5 +14,9 @@ class UvazekRepository extends Repository {
         return $this->findAll()->where('IDlekare', $IDlekare)->fetchPairs('IDlekare', 'zkratkaOdd');
         //return $this->findAll()->findBy(array('IDlekare' => $IDlekare))->fetchPairs('IDlekare', 'zkratkaOdd');
     }
+    
+    public function findByIDzamestnance($IDlekare) {
+        return $this->findAll()->where('IDlekare', $IDlekare);
+    }
 
 }
