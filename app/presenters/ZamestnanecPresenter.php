@@ -41,7 +41,9 @@ class ZamestnanecPresenter extends BasePresenter {
     }
     
     public function actionDelete($IDzamestnance){
-        $this->flashMessage('Uživatel má být vymazán.', 'success');
+        $this->zamestnanecRepository->deleteZamestnanec($IDzamestnance);
+        $this->uvazekRepository->deleteZamestnanec($IDzamestnance);
+        $this->flashMessage('Uživatel byl vymazán.', 'success');
         $this->setView('all');
     }
 

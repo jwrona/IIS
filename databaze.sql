@@ -24,6 +24,7 @@ CREATE TABLE `nemocnice`.`zamestnanec` (
   `prijmeni` varchar(50) NOT NULL,
   `role` varchar(20) NOT NULL,
   `zkratkaOdd` varchar(50),  -- v pripade sestry slouzi jako cizi klic - nutno hlidat pomoci trigru!
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `username` (`username`),
   PRIMARY KEY (`IDzamestnance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
