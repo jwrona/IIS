@@ -1,0 +1,2 @@
+[2013-11-06 23-34-27] Fatal error: syntax error, unexpected 'HomepagePresenter' (T_STRING) in /var/www/sandbox/app/presenters/HomepagePresenter.php:6  @  http://localhost/sandbox/www/  @@  exception-2013-11-06-23-34-27-6198bc0cb4530dea86290bad1e5cea3d.html
+[2013-11-17 16-26-47] Nette\Security\AuthenticationException: The password is incorrect. in /var/www/projekt/app/model/Authenticator.php:35  @  http://localhost/projekt/www/sign/in?do=signInForm-submit  @@  exception-2013-11-17-16-26-47-c214d5546af761553ec19428dce341ba.html

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="">
+        <meta name="robots" content="{$robots}" n:ifset="$robots">
+
+        <title>{block title|stripTags|trim}{/block} | IS Nemocnice</title>
+
+        <link rel="stylesheet" href="{$basePath}/css/screen.css">
+        <link rel="shortcut icon" href="{$basePath}/favicon.ico">
+        {block head}{/block}
+    </head>
+
+    <body>
+        <!-- Hlavicka -->
+        <div id="header">
+            <div id="header-inner">
+                <div class="title"><a href="{link Homepage:}">IS Nemocnice</a></div>
+
+                {if $user->isLoggedIn()}
+                    <div class="user">
+                        <span class="icon user"></span>
+                        <a n:href="Zamestnanec:">{$user->getIdentity()->username}</a> |
+                        <a n:href="Zamestnanec:password">Změna hesla</a> |
+                        <a n:href="signOut!">Odhlásit se</a>
+                    </div>
+                {/if}
+            </div>
+        </div>
+
+<!-- Zobrazeni obsahu -->
+        <div id="container">
+
+<!-- navigacni panel -->
+            <div id="sidebar">
+                {if $user->isLoggedIn()}
+                    <h2>Zaměstnanec</h2>
+                    <ul>
+                        <li><a n:href="Pacienti:">Pacienti</a>
+                        <li><a n:href="Hospitalizace:">Hospitalizace</a>
+                        <li><a n:href="Leky:">Databáze léků</a>
+                    </ul>
+                {/if}
+            </div>
+
+            <!-- Vyzadovany obsah stranky -->
+            <div id="content">
+                <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+                {include #content}
+            </div>
+
+            <div id="footer">
+
+            </div>
+        </div>
+
+        {block scripts}
+        <script src="{$basePath}/js/jquery.js"></script>
+        <script src="{$basePath}/js/netteForms.js"></script>
+        <script src="{$basePath}/js/main.js"></script>
+        {/block}
+    </body>
+</html>

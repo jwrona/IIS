@@ -1,0 +1,9 @@
+{block content}
+
+<!-- <h1 n:block="title">Přehled úkolů</h1> -->
+
+<h2>{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</h2>
+
+{control userDetailForm}
+
+{/block}
