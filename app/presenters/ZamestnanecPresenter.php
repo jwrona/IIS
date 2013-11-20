@@ -70,7 +70,8 @@ class ZamestnanecPresenter extends BasePresenter {
             $this->flashMessage('Heslo bylo změněno.', 'success');
             $this->redirect('Homepage:');
         } catch (NS\AuthenticationException $e) {
-            $form->addError('Zadané heslo není správné.');
+            $form->addError($e->getMessage());
+            return;
         }
     }
 

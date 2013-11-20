@@ -1,6 +1,5 @@
 <?php
 
-//use Nette\Application\UI;
 use Nette\Application\UI\Form;
 
 /**
@@ -13,34 +12,26 @@ class SignPresenter extends BasePresenter {
      * @return Nette\Application\UI\Form
      */
     protected function createComponentSignInForm() {
-        $form = new Form();
-        $form->addText('username', 'Uživatelské jméno:', 30, 20);
-        $form->addPassword('password', 'Heslo:', 30);
-        $form->addCheckbox('persistent', 'Pamatovat si mě na tomto počítači');
+        $form = new Form;
+        $form->addText('username', 'Login:', 30, 20)
+		->setRequired('Nebyl zadan login.');
+        $form->addPassword('password', 'Heslo:', 30)
+		->setRequired('Nebylozadano heslo.');
         $form->addSubmit('login', 'Přihlásit se');
         $form->onSuccess[] = $this->signInFormSubmitted;
         return $form;
     }
 
     public function signInFormSubmitted(Form $form) {
-        try {
-            $user = $this->getUser();
-            $values = $form->getValues();
-            if ($values->persistent) {
-                $user->setExpiration('+30 days', FALSE);
-            }
-            $user->login($values->username, $values->password);
-            $this->flashMessage('Přihlášení bylo úspěšné.', 'success');
-            $this->redirect('Homepage:');
-        } catch (NS\AuthenticationException $e) {
-            $form->addError('Neplatné uživatelské jméno nebo heslo.');
-        }
-    }
+        $values = $form->getValues();
 
-    public function actionOut() {
-        $this->getUser()->logout();
-        $this->flashMessage('You have been signed out.');
-        $this->redirect('in');
+	try {
+		$this->getUser()->login($values->username, $values->password);
+		$this->getUser()->setExpiration('+ 10 minutes', 'TRUE');
+	} catch (Nette\Security\AuthenticationException $e) {
+		$form->addError($e->getMessage());
+		return;
+	}
+	$this->redirect('Homepage:');
     }
-
 }

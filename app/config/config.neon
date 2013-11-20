@@ -16,16 +16,16 @@ common:
 			errorPresenter: Error
 
 		database:
-			dsn: 'mysql:host=localhost;dbname=nemocnice'
-			user: 'root'
-			password: 'Jarad456'
-#			dsn: 'mysql:host=localhost;dbname=nemocnice'
-#			user: 'root'
-#			password: 'Jarad456'
+			#dsn: 'mysql:host=localhost;dbname=nemocnice'
+			#user: 'root'
+			#password: 'Jarad456'
+			dsn: 'mysql:unix_socket=/var/run/mysql/mysql.sock;dbname=xwrona00'
+			user: 'xwrona00'
+			password: 'a6tumrem'
+
 
 		session:
-			autoStart: smart
-			expiration: +30 days
+			expiration: 15 days
 
 
 	services:

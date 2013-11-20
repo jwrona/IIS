@@ -56,10 +56,6 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
      * @return string
      */
     public static function calculateHash($password, $salt = NULL) {
-        if ($password === Strings::upper($password)) { // perhaps caps lock is on
-            $password = Strings::lower($password);
-        }
         return crypt($password, $salt ? : '$2a$07$' . Strings::random(22));
     }
-
 }
