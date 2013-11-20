@@ -1,0 +1,26 @@
+{block content}
+
+<h1 n:block="title">Upravit úvazek lékaře</h1>
+
+{form uvazekEditForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label oddeleni /}
+            <div class="input">{input oddeleni}</div>
+        </div>
+        <div>
+            {label typ /}
+            <div class="input">{input typ}</div>
+        </div>
+        <div>
+            {label telefon /}
+            <div class="input">{input telefon}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    {/block}
