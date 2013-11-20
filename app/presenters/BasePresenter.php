@@ -23,6 +23,17 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $pac0->link = 'Pacienti:default';
         $pac0->id = 'pac0';
         $sideMenu->rootNode->add($pac0);
+	    $pac01 = new Murdej\MenuNode;
+	    $pac01->name = "Vsichni";
+            $pac01->link = 'Pacienti:all';
+            $pac01->id = 'pac01';
+            $pac0->add($pac01);
+
+	    $pac02 = new Murdej\MenuNode;
+	    $pac02->name = "Zadni";
+            $pac02->link = 'Pacienti:nobody';
+            $pac02->id = 'pac02';
+            $pac0->add($pac02);
 
         $hos0 = new Murdej\MenuNode;
         $hos0->name = "Hospitalizace";
@@ -42,11 +53,22 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $zam0->id = 'zam0';
         $sideMenu->rootNode->add($zam0);
 
-        //$menuItem->add($menuItem2);
         return $sideMenu;
     }
 
     public function getMenu() {
         return $this->getComponent('menu');
+    }
+
+    public function actionDefault($id = null) {
+        $this->menu->selectByUrl($this->link('this'));
+    }
+
+    public function actionAll($id = null) {
+        $this->menu->selectByUrl($this->link('this'));
+    }
+
+    public function actionNobody($id = null) {
+        $this->menu->selectByUrl($this->link('this'));
     }
 }

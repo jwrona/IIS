@@ -15,7 +15,7 @@ class PacientiPresenter extends BasePresenter {
         $this->pacientRepository = $this->context->pacientRepository;
     }
 
-    public function renderDefault() {
+    public function renderAll() {
         $this->template->pacienti = $this->pacientRepository->findAll();
     }
 }

@@ -36,7 +36,11 @@
             <div id="sidebar">
                 {if $user->isLoggedIn()}
                     <h2>{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</h2>
+
+                    <h2>Menu</h2>
         	    {control menu:tree}
+                    <h2>Mapa</h2>
+        	    {control menu:map}
 <!--
                     <ul>
                         <li><a n:href="Pacienti:">Pacienti</a>

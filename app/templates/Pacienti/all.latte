@@ -1,0 +1,18 @@
+{block content}
+<table>
+    <thead>
+        <tr>    
+            <th>Jméno</th>
+            <th>Příjmení</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $pacienti as $pacient}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{$pacient->jmeno}</td>
+                <td>{$pacient->prijmeni}</td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+{/block}
