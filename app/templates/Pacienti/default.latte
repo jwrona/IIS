@@ -1,10 +1,13 @@
 {block content}
-
-<!-- <h1 n:block="title">Přehled úkolů</h1> -->
-
-<h2>Seznam Pacientů</h2>
-<h3>Nastaveno v Pacienti/default.latte</h3>
-<a n:href="Pacienti:all">Přehled všech pacientů</a>
-
-
+    <ul>
+	<li><a n:href="Pacienti:all">Pacienti</a>
+	<li><a n:href="Hospitalizace:">Hospitalizace</a>
+	    {if $user->isInRole('lekar') or $user->isInRole('administrator')}
+	    <li><a n:href="Leky:">Databáze léků</a>
+	    {/if}
+	    {if $user->isInRole('administrator')}
+	    <li><a n:href="Zamestnanec:all">Zaměstnanci</a>
+	    {/if}
+    </ul>
+{control menu:tree}
 {/block}
