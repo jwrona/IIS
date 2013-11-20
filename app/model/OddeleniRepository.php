@@ -9,9 +9,4 @@ class OddeleniRepository extends Repository {
     public function findPairsZkratkaOddNazev() {
         return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');
     }
-
-    public function functionName($param) {
-        
-    }
-
 }
