@@ -36,6 +36,8 @@
             <div id="sidebar">
                 {if $user->isLoggedIn()}
                     <h2>{$user->getIdentity()->jmeno} {$user->getIdentity()->prijmeni}</h2>
+        	    {control menu:tree}
+<!--
                     <ul>
                         <li><a n:href="Pacienti:">Pacienti</a>
                         <li><a n:href="Hospitalizace:">Hospitalizace</a>
@@ -46,6 +48,7 @@
                             <li><a n:href="Zamestnanec:all">Zaměstnanci</a>
                             {/if}
                     </ul>
+-->
                 {/if}
             </div>
 
