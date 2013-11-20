@@ -1,0 +1,52 @@
+{block content}
+
+<h1 n:block="title">Detail uživatele {$zamestnanec->jmeno} {$zamestnanec->prijmeni}</h1>
+
+<h2>Osobní detaily</h2>
+{form userEditForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label jmeno /}
+            <div class="input">{input jmeno}</div>
+        </div>
+        <div>
+            {label prijmeni /}
+            <div class="input">{input prijmeni}</div>
+        </div>
+        <div>
+            {label username /}
+            <div class="input">{input username}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+
+    {if $zamestnanec->role === 'lekar'}
+        <h2>Úvazky lékaře</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Oddělení</th>
+                    <th>Typ úvazku</th>
+                    <th>Telefon</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach $uvazky as $uvazek}
+                    <tr n:class="$iterator->isOdd() ? odd : even">
+                        <td>{$uvazek->zkratkaOdd}</td>
+                        <td>{$uvazek->roleUvazku}</td>
+                        <td>{$uvazek->telefon}</td>
+                        <td class="action"><a n:href="Uvazek:edit $zamestnanec->IDzamestnance, $uvazek->zkratkaOdd" class="icon edit">Upravit</a></td>
+                        <td class="action"><a n:href="Uvazek:delete $zamestnanec->IDzamestnance, $uvazek->zkratkaOdd" class="icon delete">Smazat</a></td>
+                    </tr>
+                {/foreach}
+            </tbody>
+        </table>
+            <a n:href="Uvazek:add $zamestnanec->IDzamestnance" class="icon edit">Přidat úvazek</a>
+    {/if}
+    {/block}

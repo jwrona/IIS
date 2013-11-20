@@ -1,0 +1,34 @@
+{block content}
+
+<h1 n:block="title">Detail uživatele {$zamestnanec->jmeno} {$zamestnanec->prijmeni}</h1>
+
+    <h2>Osobní detaily</h2>
+<b>Jméno: </b>{$zamestnanec->jmeno}<br>
+<b>Příjmení: </b>{$zamestnanec->prijmeni}<br>
+<b>Username: </b>{$zamestnanec->username}<br>
+
+{if $zamestnanec->role === 'lekar'}
+    <h2>Úvazky lékaře</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Oddělení</th>
+            <th>Typ úvazku</th>
+            <th>Telefon</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $uvazky as $uvazek}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{$uvazek->zkratkaOdd}</td>
+                <td>{$uvazek->roleUvazku}</td>
+                <td>{$uvazek->telefon}</td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+{/if}
+
+<a n:href="Zamestnanec:edit $zamestnanec->IDzamestnance" class="icon edit">Upravit</a>
+
+{/block}

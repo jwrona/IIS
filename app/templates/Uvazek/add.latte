@@ -1,0 +1,27 @@
+{block content}
+
+<h1 n:block="title">Přidat úvazek lékaři</h1>
+
+
+{form uvazekAddForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label oddeleni /}
+            <div class="input">{input oddeleni}</div>
+        </div>
+        <div>
+            {label typ /}
+            <div class="input">{input typ}</div>
+        </div>
+        <div>
+            {label telefon /}
+            <div class="input">{input telefon}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    {/block}

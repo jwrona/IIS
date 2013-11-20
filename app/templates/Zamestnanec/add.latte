@@ -1,0 +1,31 @@
+{block content}
+
+<h1 n:block="title">Přidání zaměstnance</h1>
+
+<h2>Osobní detaily</h2>
+{form userAddForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label jmeno /}
+            <div class="input">{input jmeno}</div>
+        </div>
+        <div>
+            {label prijmeni /}
+            <div class="input">{input prijmeni}</div>
+        </div>
+        <div>
+            {label username /}
+            <div class="input">{input username}</div>
+        </div>
+        <div>
+            {label role /}
+            <div class="input">{input role}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    {/block}
