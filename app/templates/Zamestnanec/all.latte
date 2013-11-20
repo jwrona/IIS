@@ -1,0 +1,74 @@
+{block content}
+
+<h1 n:block="title">Zaměstnanci nemocnice</h1>
+
+<h2>Lékaři</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Příjmení</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $lekari as $zamestnanec}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{$zamestnanec->jmeno}</td>
+                <td>{$zamestnanec->prijmeni}</td>
+                <td>{$zamestnanec->username}</td> 
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon user">Detaily</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Upravit</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Smazat</a></td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+<h2>Sestry</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Příjmení</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $sestry as $zamestnanec}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{$zamestnanec->jmeno}</td>
+                <td>{$zamestnanec->prijmeni}</td>
+                <td>{$zamestnanec->username}</td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon user">Detaily</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Upravit</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Smazat</a></td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+<h2>Administrátoři</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Příjmení</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $administratori as $zamestnanec}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{$zamestnanec->jmeno}</td>
+                <td>{$zamestnanec->prijmeni}</td>
+                <td>{$zamestnanec->username}</td>      
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon user">Detaily</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Upravit</a></td>
+                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Smazat</a></td>
+            </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+{/block}
