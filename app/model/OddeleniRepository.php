@@ -16,8 +16,8 @@ class OddeleniRepository extends Repository {
 
     public function addOddeleni($zkratkaOdd, $nazev) {
         $this->getTable()->insert(array(
-                    'zkratkaOdd' => $zkratkaOdd,
-                    'nazev' => $nazev));
+            'zkratkaOdd' => $zkratkaOdd,
+            'nazev' => $nazev));
     }
 
 }

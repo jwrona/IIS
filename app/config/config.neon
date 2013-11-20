@@ -36,7 +36,7 @@ common:
 		zamestnanecRepository: Todo\ZamestnanecRepository
 		uvazekRepository: Todo\UvazekRepository
 		pacientRepository: Todo\PacientRepository
-		#oddeleniRepository: Todo\OddeleniRepository
+		oddeleniRepository: Todo\OddeleniRepository
 
 	factories:
 
