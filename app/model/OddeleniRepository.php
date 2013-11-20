@@ -10,8 +10,14 @@ class OddeleniRepository extends Repository {
         return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');
     }
 
-    public function functionName($param) {
-        
+    public function findAllOddeleni() {
+        return $this->findAll();
+    }
+
+    public function addOddeleni($zkratkaOdd, $nazev) {
+        $this->getTable()->insert(array(
+                    'zkratkaOdd' => $zkratkaOdd,
+                    'nazev' => $nazev));
     }
 
 }
