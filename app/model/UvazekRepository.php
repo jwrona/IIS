@@ -26,6 +26,10 @@ class UvazekRepository extends Repository {
     public function findByIDzamestnance($IDlekare) {
         return $this->findAll()->where('IDlekare', $IDlekare);
     }
+    
+//    public function findByIDzamestnance($IDlekare) {
+//        return $this->getTable()->where('oddeleni.zkratkaOdd = ', $value)->where('IDlekare', $IDlekare);
+//    }
 
     public function findByIDzamestnanceZkratkaOdd($IDlekare, $zkratkaOdd) {
         return $this->findAll()->where('IDlekare', $IDlekare)->where('zkratkaOdd', $zkratkaOdd)->fetch();

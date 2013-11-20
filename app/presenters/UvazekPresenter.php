@@ -9,6 +9,7 @@ class UvazekPresenter extends BasePresenter {
 
     /** @var Todo\UserRepository */
     protected $uvazekRepository;
+    protected $oddeleniRepository;
 
     protected function startup() {
         parent::startup();
@@ -16,6 +17,7 @@ class UvazekPresenter extends BasePresenter {
             $this->redirect('Sign:in');
         }
         $this->uvazekRepository = $this->context->uvazekRepository;
+        $this->oddeleniRepository = $this->context->oddeleniRepository;
     }
 
     public function renderEdit($IDzamestnance, $zkratkaOdd) {
@@ -45,7 +47,7 @@ class UvazekPresenter extends BasePresenter {
     protected function createComponentUvazekEditForm() {
         $form = new Form();
         $form->addHidden('IDzamestnance');
-        $form->addText('oddeleni', 'Oddělení', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést zkratku oddělení.');
+        $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
         $form->addText('typ', 'Typ', 50, 50)->addRule(Form::FILLED, 'Je potřeba typ úvazku.');
         $form->addText('telefon', 'telefon', 9, 9);
         $form->addSubmit('set', 'Uložit');
@@ -63,7 +65,7 @@ class UvazekPresenter extends BasePresenter {
     protected function createComponentUvazekAddForm() {
         $form = new Form();
         $form->addHidden('IDzamestnance');
-        $form->addText('oddeleni', 'Oddělení', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést zkratku oddělení.');
+        $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
         $form->addText('typ', 'Typ', 50, 50)->addRule(Form::FILLED, 'Je potřeba typ úvazku.');
         $form->addText('telefon', 'telefon', 9, 9);
         $form->addSubmit('set', 'Uložit');
