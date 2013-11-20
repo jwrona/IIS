@@ -38,9 +38,16 @@ class ZamestnanecPresenter extends BasePresenter {
     public function renderEdit($IDzamestnance) {
         $this->template->zamestnanec = $this->zamestnanecRepository->findByIDzamestnance($IDzamestnance);
         $this->template->uvazky = $this->uvazekRepository->findByIDzamestnance($IDzamestnance);
+        $userEditForm = $this['userEditForm'];
+        $userEditForm->setDefaults(array(
+            'IDzamestnance' => $this->template->zamestnanec->IDzamestnance,
+            'jmeno' => $this->template->zamestnanec->jmeno,
+            'prijmeni' => $this->template->zamestnanec->prijmeni,
+            'username' => $this->template->zamestnanec->username
+        ));
     }
-    
-    public function actionDelete($IDzamestnance){
+
+    public function actionDelete($IDzamestnance) {
         $this->zamestnanecRepository->deleteZamestnanec($IDzamestnance);
         $this->uvazekRepository->deleteZamestnanec($IDzamestnance);
         $this->flashMessage('Uživatel byl vymazán.', 'success');
@@ -77,15 +84,37 @@ class ZamestnanecPresenter extends BasePresenter {
 
     protected function createComponentUserEditForm() {
         $form = new Form();
-        $form->addText('jmeno', 'Jméno', 50, 50);
-        $form->addText('prijmeni', 'Příjmení', 50, 50);
-        $form->addText('username', 'Username', 50, 50);
+        $form->addHidden('IDzamestnance');
+        $form->addText('jmeno', 'Jméno', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést jméno.');
+        $form->addText('prijmeni', 'Příjmení', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést příjmení.');
+        $form->addText('username', 'Username', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést přihlašovací jméno.');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->userEditSubmitted;
         return $form;
     }
 
     public function userEditSubmitted(Form $form) {
+        $values = $form->getValues();
+        $this->zamestnanecRepository->updateZamestnanec($values->IDzamestnance, $values->jmeno, $values->prijmeni, $values->username);
+        $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
+        $this->redirect('Zamestnanec:all');
+    }
+
+    protected function createComponentUserAddForm() {
+        $form = new Form();
+        $form->addHidden('password', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW');
+        $form->addText('jmeno', 'Jméno', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést jméno.');
+        $form->addText('prijmeni', 'Příjmení', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést příjmení.');
+        $form->addText('username', 'Username', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést přihlašovací jméno.');
+        $form->addSelect('role', 'Zaměstnání', array('sestra' => 'sestra', 'lekar' => 'lékař', 'administrator' => 'administrátor'));
+        $form->addSubmit('set', 'Uložit');
+        $form->onSuccess[] = $this->userAddSubmitted;
+        return $form;
+    }
+
+    public function userAddSubmitted(Form $form) {
+        $values = $form->getValues();
+        $this->zamestnanecRepository->addZamestnanec($values->jmeno, $values->prijmeni, $values->username, $values->password, $values->role);
         $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
         $this->redirect('Zamestnanec:all');
     }
