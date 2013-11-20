@@ -30,6 +30,22 @@ class ZamestnanecRepository extends Repository {
         $this->findBy(array('IDzamestnance' => $IDzamestnance))->update(array('erased' => 1));
     }
 
+    public function updateZamestnanec($IDzamestnance, $jmeno, $prijmeni, $username) {
+        $this->findBy(array('IDzamestnance' => $IDzamestnance))->update(
+                array('jmeno' => $jmeno,
+                    'prijmeni' => $prijmeni,
+                    'username' => $username));
+    }
+
+    public function addZamestnanec($jmeno, $prijmeni, $username, $password, $role) {
+        $this->getTable()->insert(array(
+            'jmeno' => $jmeno,
+            'prijmeni' => $prijmeni,
+            'username' => $username,
+            'password' => $password,
+            'role' => $role));
+    }
+
     public function setPassword($id, $password) {
         $this->getTable()->where(array('IDzamestnance' => $id))->update(array(
             'password' => Authenticator::calculateHash($password)));
