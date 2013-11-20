@@ -1,0 +1,23 @@
+{block content}
+
+<h1 n:block="title">Přidat oddělení</h1>
+
+
+{form oddeleniAddForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label zkratkaOdd /}
+            <div class="input">{input zkratkaOdd}</div>
+        </div>
+        <div>
+            {label nazev /}
+            <div class="input">{input nazev}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    {/block}

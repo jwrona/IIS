@@ -26,9 +26,10 @@ class UvazekRepository extends Repository {
     public function findByIDzamestnance($IDlekare) {
         return $this->findAll()->where('IDlekare', $IDlekare);
     }
-    
+
 //    public function findByIDzamestnance($IDlekare) {
-//        return $this->getTable()->where('oddeleni.zkratkaOdd = ', $value)->where('IDlekare', $IDlekare);
+//        $database = new Connection('mysql:host=localhost;dbname=nemocnice', 'root', 'Jarad456');
+//        return $database->query('select * from uvazek, oddeleni where (uvazek.IDlekare = 2) AND (oddeleni.zkratkaOdd = uvazek.zkratkaOdd)')->dump();
 //    }
 
     public function findByIDzamestnanceZkratkaOdd($IDlekare, $zkratkaOdd) {

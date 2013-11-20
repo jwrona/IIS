@@ -1,0 +1,29 @@
+{block content}
+
+<h1 n:block="title">Oddělení nemocnice</h1>
+
+<a n:href="Oddeleni:add" class="icon edit">Přidat oddělení</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Zkratka</th>
+            <th>Název</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $oddeleni as $odd}
+            {*if !$zamestnanec->erased*}
+                <tr n:class="$iterator->isOdd() ? odd : even">
+                    <td>{$odd->zkratkaOdd}</td>
+                    <td>{$odd->nazev}</td>
+<!--                    <td class="action"><a n:href="" class="icon user">Detaily</a></td>-->
+                    <td class="action"><a n:href="Oddeleni:edit $odd->zkratkaOdd" class="icon edit">Upravit</a></td>
+                    <td class="action"><a n:href="Oddeleni:delete $odd->zkratkaOdd" class="icon delete">Smazat</a></td>
+                </tr>
+            {*/if*}
+        {/foreach}
+    </tbody>
+</table>
+
+{/block}
