@@ -37,7 +37,7 @@ class OddeleniPresenter extends BasePresenter {
     public function actionDelete($zkratkaOdd) {
         $this->oddeleniRepository->deleteOddeleni($zkratkaOdd);
         $this->flashMessage('Oddělení bylo vymazáno.', 'success');
-        $this->redirect('Oddeleni:all');
+        $this->redirect('Oddeleni:');
     }
 
     protected function createComponentOddeleniAddForm() {
@@ -53,7 +53,7 @@ class OddeleniPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->oddeleniRepository->addOddeleni($values->zkratkaOdd, $values->nazev);
         $this->flashMessage('Oddělení bylo přidáno.', 'success');
-        $this->redirect('Oddeleni:all');
+        $this->redirect('Oddeleni:');
     }
     
      protected function createComponentOddeleniEditForm() {
@@ -69,6 +69,6 @@ class OddeleniPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->oddeleniRepository->updateOddeleni($values->zkratkaOdd, $values->nazev);
         $this->flashMessage('Oddělení bylo zmeneno.', 'success');
-        $this->redirect('Oddeleni:all');
+        $this->redirect('Oddeleni:');
     }
 }

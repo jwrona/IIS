@@ -38,6 +38,7 @@ common:
 		pacientRepository: Todo\PacientRepository
 		oddeleniRepository: Todo\OddeleniRepository
 		lekRepository: Todo\LekRepository
+		hospitalizaceRepository: Todo\HospitalizaceRepository
 
 	factories:
 

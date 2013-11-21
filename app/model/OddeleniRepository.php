@@ -3,11 +3,17 @@
 namespace Todo;
 
 use Nette;
+use Nette\Database\Connection;
 
 class OddeleniRepository extends Repository {
 
     public function findPairsZkratkaOddNazev() {
         return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');
+    }
+    
+    public function findPairsZkratkaOddNazevIDzamestnance() {
+        $database = new Connection('mysql:host=localhost;dbname=nemocnice', 'root', 'Jarad456');
+        return $database->query('SELECT zkratkaOdd, nazev FROM oddeleni');
     }
 
     public function findAllOddeleni() {
