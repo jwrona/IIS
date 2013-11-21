@@ -8,9 +8,16 @@ use Nette\Application\UI\Formi,
  * Base presenter for all application presenters.
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
+    private $user;
+
+    protected function startup()
+    {
+	parent::startup();
+        $this->user = $this->getUser();
+    }
 
     public function handleSignOut() {
-        $this->getUser()->logout();
+        $this->user->logout();
         $this->flashMessage('Odhlaseni probehlo uspesne.', 'success');
         $this->redirect('Sign:in');
     }
@@ -20,18 +27,18 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
         $pac0 = new Murdej\MenuNode;
         $pac0->name = "Pacienti";
-        $pac0->link = 'Pacienti:default';
+        $pac0->link = 'Pacient:default';
         $pac0->id = 'pac0';
         $sideMenu->rootNode->add($pac0);
 	    $pac01 = new Murdej\MenuNode;
 	    $pac01->name = "Vsichni";
-            $pac01->link = 'Pacienti:all';
+            $pac01->link = 'Pacient:all';
             $pac01->id = 'pac01';
             $pac0->add($pac01);
 
 	    $pac02 = new Murdej\MenuNode;
 	    $pac02->name = "Zadni";
-            $pac02->link = 'Pacienti:nobody';
+            $pac02->link = 'Pacient:nobody';
             $pac02->id = 'pac02';
             $pac0->add($pac02);
 

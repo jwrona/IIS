@@ -3,7 +3,7 @@
 /**
  * Homepage presenter.
  */
-class PacientiPresenter extends BasePresenter {
+class PacientPresenter extends BasePresenter {
     /** @var Todo\UserRepository */
     protected $pacientRepository;
 
@@ -13,6 +13,11 @@ class PacientiPresenter extends BasePresenter {
             $this->redirect('Sign:in');
         }
         $this->pacientRepository = $this->context->pacientRepository;
+    }
+
+    public function renderDefault()
+    {
+        $this->redirect('Pacient:all');
     }
 
     public function renderAll() {
