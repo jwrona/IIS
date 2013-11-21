@@ -20,7 +20,7 @@ class LekPresenter extends BasePresenter {
     public function renderDefault() {
         $this->template->leky = $this->lekRepository->findAllLeky();
     }
-    
+
     public function renderSearch($nazev) {
         $this->template->leky = $this->lekRepository->findLekyByName($nazev);
         $this->template->nazev = $nazev;
@@ -38,4 +38,17 @@ class LekPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->redirect('Lek:search', $values->nazev);
     }
+
+    protected function createComponentViewAllButton() {
+        $form = new Form();
+        $form->addSubmit('set', 'Zobrazit vše');
+        $form->onSuccess[] = $this->ViewAllButtonSubmitted;
+        return $form;
+    }
+
+    public function ViewAllButtonSubmitted(Form $form) {
+        $values = $form->getValues();
+        $this->redirect('Lek:');
+    }
+
 }

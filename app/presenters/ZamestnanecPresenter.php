@@ -10,6 +10,7 @@ class ZamestnanecPresenter extends BasePresenter {
     /** @var Todo\UserRepository */
     protected $zamestnanecRepository;
     protected $uvazekRepository;
+    protected $oddeleniRepository;
 
     /** @var Todo\Authenticator */
     private $authenticator;
@@ -21,6 +22,7 @@ class ZamestnanecPresenter extends BasePresenter {
         }
         $this->zamestnanecRepository = $this->context->zamestnanecRepository;
         $this->uvazekRepository = $this->context->uvazekRepository;
+        $this->oddeleniRepository = $this->context->oddeleniRepository;
         $this->authenticator = $this->context->authenticator;
     }
 
@@ -43,7 +45,8 @@ class ZamestnanecPresenter extends BasePresenter {
             'IDzamestnance' => $this->template->zamestnanec->IDzamestnance,
             'jmeno' => $this->template->zamestnanec->jmeno,
             'prijmeni' => $this->template->zamestnanec->prijmeni,
-            'username' => $this->template->zamestnanec->username
+            'username' => $this->template->zamestnanec->username,
+            'oddeleni' => $this->template->zamestnanec->zkratkaOdd
         ));
     }
 
@@ -88,6 +91,11 @@ class ZamestnanecPresenter extends BasePresenter {
         $form->addText('jmeno', 'Jméno', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést jméno.');
         $form->addText('prijmeni', 'Příjmení', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést příjmení.');
         $form->addText('username', 'Username', 50, 50)->addRule(Form::FILLED, 'Je potřeba uvést přihlašovací jméno.');
+        if ($this->getUser()->isInRole('administrator')) {
+            $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
+        } else {
+            $form->addHidden('oddeleni');
+        }
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->userEditSubmitted;
         return $form;
@@ -95,7 +103,7 @@ class ZamestnanecPresenter extends BasePresenter {
 
     public function userEditSubmitted(Form $form) {
         $values = $form->getValues();
-        $this->zamestnanecRepository->updateZamestnanec($values->IDzamestnance, $values->jmeno, $values->prijmeni, $values->username);
+        $this->zamestnanecRepository->updateZamestnanec($values->IDzamestnance, $values->jmeno, $values->prijmeni, $values->username, $values->oddeleni);
         $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
         $this->redirect('Zamestnanec:default');
     }

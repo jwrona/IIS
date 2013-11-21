@@ -19,6 +19,12 @@
             {label username /}
             <div class="input">{input username}</div>
         </div>
+        {if $zamestnanec->role === 'sestra'}
+        <div>
+            {label oddeleni /}
+            <div class="input">{input oddeleni}</div>
+        </div>
+        {/if}
         <div>
             {label set /}
             <div class="submitt">{input set}</div>
@@ -47,6 +53,6 @@
                 {/foreach}
             </tbody>
         </table>
-            <a n:href="Uvazek:add $zamestnanec->IDzamestnance" class="icon edit">Přidat úvazek</a>
+        <a n:href="Uvazek:add $zamestnanec->IDzamestnance" class="icon edit">Přidat úvazek</a>
     {/if}
     {/block}
