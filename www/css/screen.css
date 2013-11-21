@@ -55,8 +55,9 @@ body {
 
 #footer {
         margin: 2em;
-        text-align: center;
         font-size: smaller;
+	position: fixed;
+	bottom: 0px;
 }
 
 
