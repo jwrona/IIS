@@ -48,24 +48,29 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $hos0->id = 'hos0';
         $sideMenu->rootNode->add($hos0);
 
-        $lek0 = new Murdej\MenuNode;
-        $lek0->name = "Databáze léků";
-        $lek0->link = 'Lek:default';
-        $lek0->id = 'lek0';
-        $sideMenu->rootNode->add($lek0);
+        if ($this->user->isInRole('lekar') | $this->user->isInRole('administrator'))
+        {
+	    $lek0 = new Murdej\MenuNode;
+	    $lek0->name = "Databáze léků";
+	    $lek0->link = 'Lek:default';
+	    $lek0->id = 'lek0';
+	    $sideMenu->rootNode->add($lek0);
+        }
 
-        $zam0 = new Murdej\MenuNode;
-        $zam0->name = "Zaměstnanci";
-        $zam0->link = 'Zamestnanec:default';
-        $zam0->id = 'zam0';
-        $sideMenu->rootNode->add($zam0);
-        
-        $odd0 = new Murdej\MenuNode;
-        $odd0->name = "Oddělení";
-        $odd0->link = 'Oddeleni:';
-        $odd0->id = 'odd0';
-        $sideMenu->rootNode->add($odd0);
-
+        if ($this->user->isInRole('administrator'))
+        {
+	    $zam0 = new Murdej\MenuNode;
+	    $zam0->name = "Zaměstnanci";
+	    $zam0->link = 'Zamestnanec:default';
+	    $zam0->id = 'zam0';
+	    $sideMenu->rootNode->add($zam0);
+	    
+	    $odd0 = new Murdej\MenuNode;
+	    $odd0->name = "Oddělení";
+	    $odd0->link = 'Oddeleni:';
+	    $odd0->id = 'odd0';
+	    $sideMenu->rootNode->add($odd0);
+        }
         return $sideMenu;
     }
 
