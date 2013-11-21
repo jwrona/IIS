@@ -15,6 +15,10 @@ class OddeleniPresenter extends BasePresenter {
             $this->redirect('Sign:in');
         }
 
+        if (!$this->getUser()->isinRole('administrator')) {
+            $this->redirect('Err:access');
+        }
+
         $this->oddeleniRepository = $this->context->oddeleniRepository;
     }
 

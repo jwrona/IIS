@@ -20,6 +20,11 @@ class ZamestnanecPresenter extends BasePresenter {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect('Sign:in');
         }
+
+        if (!$this->getUser()->isinRole('administrator')) {
+            $this->redirect('Err:access');
+        }
+
         $this->zamestnanecRepository = $this->context->zamestnanecRepository;
         $this->uvazekRepository = $this->context->uvazekRepository;
         $this->oddeleniRepository = $this->context->oddeleniRepository;

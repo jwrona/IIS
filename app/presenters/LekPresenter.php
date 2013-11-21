@@ -14,6 +14,10 @@ class LekPresenter extends BasePresenter {
             $this->redirect('Sign:in');
         }
 
+        if (!$this->getUser()->isinRole('lekar') && !$this->getUser()->isinRole('administrator')) {
+            $this->redirect('Err:access');
+        }
+
         $this->lekRepository = $this->context->lekRepository;
     }
 
@@ -38,6 +42,7 @@ class LekPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->redirect('Lek:search', $values->nazev);
     }
+<<<<<<< HEAD
 
     protected function createComponentViewAllButton() {
         $form = new Form();
@@ -52,3 +57,6 @@ class LekPresenter extends BasePresenter {
     }
 
 }
+=======
+}
+>>>>>>> 51af7a45d1cd03b6c5fdb2ac51f721ec7e294ce1
