@@ -1,8 +1,7 @@
 {block content}
-<h2>Pacienti</h2>
 <table>
     <thead>
-        <tr>
+        <tr>    
             <th>Jméno</th>
             <th>Příjmení</th>
         </tr>
@@ -12,11 +11,6 @@
             <tr n:class="$iterator->isOdd() ? odd : even">
                 <td>{$pacient->jmeno}</td>
                 <td>{$pacient->prijmeni}</td>
-<!--
-                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon user">Detaily</a></td>
-                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Upravit</a></td>
-                <td class="action"><a n:href="Zamestnanec:detail $zamestnanec->IDzamestnance" class="icon edit">Smazat</a></td>
--->
             </tr>
         {/foreach}
     </tbody>

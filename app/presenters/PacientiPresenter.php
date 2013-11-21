@@ -18,9 +18,4 @@ class PacientiPresenter extends BasePresenter {
     public function renderAll() {
         $this->template->pacienti = $this->pacientRepository->findAll();
     }
-
-    public function createComponentMenu() {
-        $menu = new Murdej\Menu;
-        return $menu;
-    }
 }

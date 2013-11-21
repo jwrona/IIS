@@ -24,7 +24,7 @@ class ZamestnanecPresenter extends BasePresenter {
         $this->authenticator = $this->context->authenticator;
     }
 
-    public function renderAll() {
+    public function renderDefault() {
         $this->template->lekari = $this->zamestnanecRepository->findDoctors();
         $this->template->sestry = $this->zamestnanecRepository->findNurses();
         $this->template->administratori = $this->zamestnanecRepository->findAdministrators();
@@ -51,7 +51,7 @@ class ZamestnanecPresenter extends BasePresenter {
         $this->zamestnanecRepository->deleteZamestnanec($IDzamestnance);
         $this->uvazekRepository->deleteZamestnanec($IDzamestnance);
         $this->flashMessage('Uživatel byl vymazán.', 'success');
-        $this->setView('all');
+        $this->setView('default');
     }
 
     protected function createComponentPasswordForm() {
@@ -97,7 +97,7 @@ class ZamestnanecPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->zamestnanecRepository->updateZamestnanec($values->IDzamestnance, $values->jmeno, $values->prijmeni, $values->username);
         $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
-        $this->redirect('Zamestnanec:all');
+        $this->redirect('Zamestnanec:default');
     }
 
     protected function createComponentUserAddForm() {
@@ -116,7 +116,7 @@ class ZamestnanecPresenter extends BasePresenter {
         $values = $form->getValues();
         $this->zamestnanecRepository->addZamestnanec($values->jmeno, $values->prijmeni, $values->username, $values->password, $values->role);
         $this->flashMessage('Údaje o uživateli byly uloženy.', 'success');
-        $this->redirect('Zamestnanec:all');
+        $this->redirect('Zamestnanec:default');
     }
 
 }
