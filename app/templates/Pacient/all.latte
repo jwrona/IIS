@@ -1,4 +1,11 @@
 {block content}
+{form selectPacientForm}
+    <div>
+        {control $form errors}
+        {label oddeleni /}
+        <div class="input">{input oddeleni}</div>
+    </div>
+{/form}
 <table>
     <thead>
         <tr>    
@@ -15,4 +22,5 @@
         {/foreach}
     </tbody>
 </table>
+
 {/block}
