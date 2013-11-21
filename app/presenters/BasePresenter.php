@@ -59,6 +59,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $zam0->link = 'Zamestnanec:default';
         $zam0->id = 'zam0';
         $sideMenu->rootNode->add($zam0);
+        
+        $odd0 = new Murdej\MenuNode;
+        $odd0->name = "Oddělení";
+        $odd0->link = 'Oddeleni:';
+        $odd0->id = 'odd0';
+        $sideMenu->rootNode->add($odd0);
 
         return $sideMenu;
     }

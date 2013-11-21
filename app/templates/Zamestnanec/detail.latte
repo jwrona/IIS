@@ -7,6 +7,12 @@
 <b>Příjmení: </b>{$zamestnanec->prijmeni}<br>
 <b>Username: </b>{$zamestnanec->username}<br>
 
+{if $zamestnanec->role === 'sestra'}
+    <h2>Oddělení</h2>
+{$zamestnanec->zkratkaOdd}
+<br><br>
+{/if}
+
 {if $zamestnanec->role === 'lekar'}
     <h2>Úvazky lékaře</h2>
 <table>
