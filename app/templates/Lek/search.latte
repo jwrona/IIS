@@ -1,0 +1,36 @@
+{block content}
+
+<h1 n:block="title">Výsledek hledání</h1>
+
+{form searchLekForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label nazev /}
+            <div class="input">{input nazev}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+<br>
+    <b>Hledaný lék:</b>{$nazev}
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Název</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach $leky as $lek}
+                <tr n:class="$iterator->isOdd() ? odd : even">
+                    <td>{$lek->nazev}</td>
+                </tr>
+        {/foreach}
+    </tbody>
+</table>
+
+{/block}

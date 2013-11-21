@@ -1,0 +1,19 @@
+{block content}
+
+<h1 n:block="title">Upravit oddělení</h1>
+
+<b>Zkratka oddělení: </b>{$oddeleni->zkratkaOdd}<br>
+{form oddeleniEditForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label nazev /}
+            <div class="input">{input nazev}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    {/block}
