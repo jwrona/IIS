@@ -43,7 +43,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
         $lek0 = new Murdej\MenuNode;
         $lek0->name = "Databáze léků";
-        $lek0->link = 'Leky:default';
+        $lek0->link = 'Lek:default';
         $lek0->id = 'lek0';
         $sideMenu->rootNode->add($lek0);
 
