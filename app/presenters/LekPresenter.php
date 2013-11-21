@@ -14,6 +14,10 @@ class LekPresenter extends BasePresenter {
             $this->redirect('Sign:in');
         }
 
+        if (!$this->getUser()->isinRole('lekar') && !$this->getUser()->isinRole('administrator')) {
+            $this->redirect('Err:access');
+        }
+
         $this->lekRepository = $this->context->lekRepository;
     }
 
