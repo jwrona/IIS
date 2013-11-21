@@ -18,7 +18,7 @@ class OddeleniPresenter extends BasePresenter {
         $this->oddeleniRepository = $this->context->oddeleniRepository;
     }
 
-    public function renderAll() {
+    public function renderDefault() {
         $this->template->oddeleni = $this->oddeleniRepository->findAllOddeleni();
     }
     
