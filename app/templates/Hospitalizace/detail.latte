@@ -1,0 +1,60 @@
+{block content}
+
+<h1 n:block="title">Hospitalizace</h1>
+
+    <h2>Pacient</h2>
+<b>Jméno: </b><br>
+<b>Příjmení: </b><br>
+<b>Rodné číslo: </b><br>
+<br><br>
+
+    <h2>Léky</h2>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Od</th>
+            <th>Do</th>
+            <th>Dávka</th>
+            <th>Podání</th>
+        </tr>
+    </thead>
+<!--    <tbody>
+        {*foreach $leky as $lek*}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{*$lek->nazev*}</td>
+                <td>{*$lek->zacatekPodani*}</td>
+                <td>{*$lek->konecPodani*}</td>
+                <td>{*$lek->mnozstvi*}</td>
+                <td>{*$lek->zpusobPodani*}</td>
+            </tr>
+        {*/foreach*}
+    </tbody>-->
+</table>
+
+<a n:href="" class="icon edit">Přidat lék</a>
+
+    <h2>Vyšetření</h2>
+    
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Provedeno</th>
+            <th>Výsledek</th>
+        </tr>
+    </thead>
+<!--    <tbody>
+        {*foreach $vysetreni as $vys*}
+            <tr n:class="$iterator->isOdd() ? odd : even">
+                <td>{*$lek->CasProvedeni*}</td>
+                <td>{*$lek->vysledek*}</td>
+            </tr>
+        {*/foreach*}
+    </tbody>-->
+</table>
+
+<a n:href="" class="icon edit">Přidat vyšetření</a>
+
+{/block}
