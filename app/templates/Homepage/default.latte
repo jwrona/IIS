@@ -1,19 +1,14 @@
 {block content}
-
-<!-- <h1 n:block="title">Přehled úkolů</h1> -->
-
-{if $user->isLoggedIn()}
-    <h2>Informační systém nemocnice poskytuje následující činnosti:</h2>
-    <ul>
-        <li><a n:href="Pacienti:">Databáze registrovaných pacientů</a>
-        <li><a n:href="Hospitalizace:">Aktuálně hospitalizovaní pacienti</a>
-            {if $user->isInRole('lekar') or $user->isInRole('administrator')}
-            <li><a n:href="Leky:">Databáze léků</a>
-            {/if}
-            {if $user->isInRole('administrator')}
-            <li><a n:href="Zamestnanec:">Přehled všech zaměstnanců</a>
-            {/if}
-    </ul>
-{/if}
-
+<h1>Informační systém nemocnice</h1>
+<h2>IS poskytuje následující činnosti:</h2>
+<ul>
+    <li><a n:href="Pacienti:">Databáze registrovaných pacientů</a>
+    <li><a n:href="Hospitalizace:">Aktuálně hospitalizovaní pacienti</a>
+	{if $user->isInRole('lekar') or $user->isInRole('administrator')}
+	<li><a n:href="Leky:">Databáze léků</a>
+	{/if}
+	{if $user->isInRole('administrator')}
+	<li><a n:href="Zamestnanec:">Přehled všech zaměstnanců</a>
+	{/if}
+</ul>
 {/block}

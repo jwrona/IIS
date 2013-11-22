@@ -41,16 +41,28 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $pac0->id = 'pac0';
         $sideMenu->rootNode->add($pac0);
 	    $pac01 = new Murdej\MenuNode;
-	    $pac01->name = "Vsichni";
+	    $pac01->name = "Všichni";
             $pac01->link = 'Pacient:all';
             $pac01->id = 'pac01';
             $pac0->add($pac01);
 
 	    $pac02 = new Murdej\MenuNode;
-	    $pac02->name = "Zadni";
-            $pac02->link = 'Pacient:nobody';
+	    $pac02->name = "Hospitalizovaní";
+            $pac02->link = 'Pacient:hospitalizovani';
             $pac02->id = 'pac02';
             $pac0->add($pac02);
+
+	    $pac03 = new Murdej\MenuNode;
+	    $pac03->name = "Nehospitalizovaní";
+            $pac03->link = 'Pacient:nehospitalizovani';
+            $pac03->id = 'pac03';
+            $pac0->add($pac03);
+
+	    $pac04 = new Murdej\MenuNode;
+	    $pac04->name = "Přidat";
+            $pac04->link = 'Pacient:add';
+            $pac04->id = 'pac04';
+            $pac0->add($pac04);
 
         $hos0 = new Murdej\MenuNode;
         $hos0->name = "Hospitalizace";

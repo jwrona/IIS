@@ -1,5 +1,6 @@
 {block content}
-<h2>Zobrazení všech pacientů</h2>
+<h2>Zobrazení aktuálně nehospitalizovaných pacientů</h2>
+
 {form searchForm}
     <div>
         {control $form errors}
@@ -26,5 +27,7 @@
         {/foreach}
     </tbody>
 </table>
+{else}
+<b>Žádný pacient není nehospitalizovaný.</b>
 {/if}
 {/block}
