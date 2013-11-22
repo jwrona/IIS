@@ -22,15 +22,18 @@ class HospitalizacePresenter extends BasePresenter {
         $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
     }
 
-    public function renderDetail() {
-        $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+    public function renderDetail($IDhospitalizace) {
+        $this->template->leky = $this->hospitalizaceRepository->findLeky($IDhospitalizace);
+        $this->template->vysetreni = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
     }
 
     public function renderSearch($zkratkaOdd) {
         if ($zkratkaOdd == NULL) {
             $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
         } else {
-            $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
+            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
+                                                                             $this->getUser()->getIdentity()->getId(),
+                                                                             $zkratkaOdd);
         }
     }
     
@@ -40,7 +43,7 @@ class HospitalizacePresenter extends BasePresenter {
 
     protected function createComponentSearchHospitalizaceForm() {
         $form = new Form();
-        $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
+        $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId()));
         $form->addSubmit('set', 'Zobrazit');
         $form->onSuccess[] = $this->SearchHospitalizaceFormSubmitted;
         return $form;

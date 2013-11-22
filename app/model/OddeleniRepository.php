@@ -7,13 +7,16 @@ use Nette\Database\Connection;
 
 class OddeleniRepository extends Repository {
 
+    public function findPairsZkratkaOddNazevIDzamestnance($IDlekare) {
+        return $this->connection->query(
+                        'SELECT uvazek.zkratkaOdd, oddeleni.nazev 
+                                 FROM oddeleni, uvazek
+                                 WHERE ' . $IDlekare . ' = uvazek.IDlekare AND uvazek.zkratkaOdd = oddeleni.zkratkaOdd'
+                )->fetchPairs('zkratkaOdd', 'nazev');
+    }
+
     public function findPairsZkratkaOddNazev() {
         return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');
-    }
-    
-    public function findPairsZkratkaOddNazevIDzamestnance() {
-        $database = new Connection('mysql:host=localhost;dbname=nemocnice', 'root', 'Jarad456');
-        return $database->query('SELECT zkratkaOdd, nazev FROM oddeleni');
     }
 
     public function findAllOddeleni() {

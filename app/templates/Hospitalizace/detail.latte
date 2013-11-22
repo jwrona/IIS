@@ -20,17 +20,17 @@
             <th>Podání</th>
         </tr>
     </thead>
-<!--    <tbody>
-        {*foreach $leky as $lek*}
+    <tbody>
+        {foreach $leky as $lek}
             <tr n:class="$iterator->isOdd() ? odd : even">
-                <td>{*$lek->nazev*}</td>
-                <td>{*$lek->zacatekPodani*}</td>
-                <td>{*$lek->konecPodani*}</td>
-                <td>{*$lek->mnozstvi*}</td>
-                <td>{*$lek->zpusobPodani*}</td>
+                <td>{$lek->nazev}</td>
+                <td>{$lek->zacatekPodani}</td>
+                <td>{$lek->konecPodani}</td>
+                <td>{$lek->mnozstvi}</td>
+                <td>{$lek->zpusobPodani}</td>
             </tr>
-        {*/foreach*}
-    </tbody>-->
+        {/foreach}
+    </tbody>
 </table>
 
 <a n:href="" class="icon edit">Přidat lék</a>
