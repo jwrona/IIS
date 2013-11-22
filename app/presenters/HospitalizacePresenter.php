@@ -21,7 +21,9 @@ class HospitalizacePresenter extends BasePresenter {
 
     public function renderDetail($IDhospitalizace) {
         $this->template->leky = $this->hospitalizaceRepository->findLeky($IDhospitalizace);
-        $this->template->vysetreni = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+        $this->template->vysetreni = $this->hospitalizaceRepository->findVysetreni($IDhospitalizace);
+        $this->template->pacient = $this->hospitalizaceRepository->findPacient($IDhospitalizace);
+        $this->template->lekar = $this->hospitalizaceRepository->findLekar($IDhospitalizace);
     }
 
     public function renderSearch($zkratkaOdd) {
