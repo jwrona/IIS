@@ -13,9 +13,7 @@ class EditPasswordPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-        }
+        $this->checkLoggedIn();
         $this->authenticator = $this->context->authenticator;
 	$this->zamestnanecRepository = $this->context->zamestnanecRepository;
     }

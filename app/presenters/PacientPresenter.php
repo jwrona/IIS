@@ -13,9 +13,8 @@ class PacientPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-        }
+	$this->checkLoggedIn();
+
         $this->pacientRepository = $this->context->pacientRepository;
         $this->oddeleniRepository = $this->context->oddeleniRepository;
 

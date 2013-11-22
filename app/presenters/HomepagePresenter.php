@@ -5,16 +5,12 @@
  */
 class HomepagePresenter extends BasePresenter
 {
+    /** @var Todo\TaskRepository */
+    //private $taskRepository;
 
-        /** @var Todo\TaskRepository */
-        //private $taskRepository;
-
-        protected function startup()
-        {
-          parent::startup();
-
-          if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-          }
-        }
+    protected function startup()
+    {
+	parent::startup();
+	$this->checkLoggedIn();
+    }
 }
