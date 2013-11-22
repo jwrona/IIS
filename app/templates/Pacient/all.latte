@@ -2,15 +2,16 @@
 {form selectPacientForm}
     <div>
         {control $form errors}
-        {label oddeleni /}
-        <div class="input">{input oddeleni}</div>
+        <b>Hospitalizováni na:</b> {input oddeleni}
     </div>
 {/form}
+{if $pacienti != NULL}
 <table>
     <thead>
         <tr>    
             <th>Jméno</th>
             <th>Příjmení</th>
+            <th>Oddělení</th>
         </tr>
     </thead>
     <tbody>
@@ -18,9 +19,10 @@
             <tr n:class="$iterator->isOdd() ? odd : even">
                 <td>{$pacient->jmeno}</td>
                 <td>{$pacient->prijmeni}</td>
+                <td>{$pacient->zkratkaOdd}</td>
             </tr>
         {/foreach}
     </tbody>
 </table>
-
+{/if}
 {/block}

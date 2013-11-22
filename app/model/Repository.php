@@ -27,6 +27,14 @@ abstract class Repository extends Nette\Object {
     }
 
     /**
+     * Vrací objekt reprezentující spojení mezi PHP serverem a databází.
+     * @return Nette\Database\Connection
+     */
+    protected function getConnection() {
+        return $this->connection;
+    }
+
+    /**
      * Vrací všechny řádky z tabulky.
      * @return Nette\Database\Table\Selection
      */
@@ -41,5 +49,4 @@ abstract class Repository extends Nette\Object {
     public function findBy(array $by) {
         return $this->getTable()->where($by);
     }
-
 }
