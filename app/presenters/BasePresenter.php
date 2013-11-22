@@ -77,16 +77,4 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
     public function getMenu() {
         return $this->getComponent('menu');
     }
-
-    public function actionDefault($id = null) {
-        $this->menu->selectByUrl($this->link('this'));
-    }
-
-    public function actionAll($id = null) {
-        $this->menu->selectByUrl($this->link('this'));
-    }
-
-    public function actionNobody($id = null) {
-        $this->menu->selectByUrl($this->link('this'));
-    }
 }
