@@ -3,6 +3,7 @@
 namespace Todo;
 
 use Nette;
+use Nette\Database\Connection;
 
 class UvazekRepository extends Repository {
 
@@ -27,9 +28,16 @@ class UvazekRepository extends Repository {
         return $this->findAll()->where('IDlekare', $IDlekare);
     }
 
+    public function findOddeleniByIDzamestnance($IDlekare) {
+        return $this->connection->query(
+                                'SELECT nazev 
+                                 FROM uvazek, oddeleni
+                                 WHERE (uvazek.IDlekare = '.$IDlekare.') AND (oddeleni.zkratkaOdd = uvazek.zkratkaOdd)'
+        );
+    }
+
 //    public function findByIDzamestnance($IDlekare) {
-//        $database = new Connection('mysql:host=localhost;dbname=nemocnice', 'root', 'Jarad456');
-//        return $database->query('select * from uvazek, oddeleni where (uvazek.IDlekare = 2) AND (oddeleni.zkratkaOdd = uvazek.zkratkaOdd)')->dump();
+//        return $this->getTable('uvazek')->where('oddeleni.zkratkaOdd','ARO');
 //    }
 
     public function findByIDzamestnanceZkratkaOdd($IDlekare, $zkratkaOdd) {

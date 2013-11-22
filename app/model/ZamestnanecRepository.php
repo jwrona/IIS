@@ -12,6 +12,12 @@ class ZamestnanecRepository extends Repository {
 
     public function findByIDzamestnance($IDzamestnance) {
         return $this->findAll()->where('IDzamestnance', $IDzamestnance)->fetch();
+//        return $this->connection->query(
+//                                'SELECT * 
+//                                 FROM uvazek, oddeleni, zamestnanec
+//                                 WHERE ((zamestnanec.zkratkaOdd = oddeleni.zkratkaOdd) AND zamestnanec.IDzamestnance = '.$IDzamestnance.') OR
+//                                 ((uvazek.zkratkaOdd = oddeleni.zkratkaOdd) AND (zamestnanec.IDzamestnance = '.$IDzamestnance.'))'
+//                                 );
     }
 
     public function findDoctors() {
