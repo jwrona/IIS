@@ -1,0 +1,24 @@
+{block content}
+<h2>Přidání nového pacienta</h2>
+{form addForm}
+<div>
+{control $form errors}
+    <div>
+	{label jmeno /}
+	<div class="input">{input jmeno}</div>
+    </div>
+    <div>
+	{label prijmeni /}
+	<div class="input">{input prijmeni}</div>
+    </div>
+    <div>
+	{label rc /}
+	<div class="input">{input rc}</div>
+    </div>
+    <div>
+	{label send /}
+	<div class="submit">{input send}</div>
+    </div>
+</div>
+{/form}
+{/block}

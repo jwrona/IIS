@@ -25,26 +25,15 @@ class PacientPresenter extends BasePresenter {
         $this->menu->selectByUrl($urlForMenu);
     }
 
-/*
-    public function actionDefault($id) {
-        $this->flashMessage($id);
-        //$this->setView('all');
-    }
-
-    public function actionAll($id) {
-        $this->flashMessage($id);
-    }
-
-    public function actionNobody($id) {
-        $this->flashMessage($id);
-    }
-*/
     public function renderDefault()
     {
         //$this->redirect('all', 'abc');
     }
 
-    public function renderAll($zkratkaOdd)
+    /**
+     * Hospitalizovani
+     */
+    public function renderHospitalizovani($zkratkaOdd)
     {
 	if ($zkratkaOdd != NULL)
         {
@@ -70,6 +59,79 @@ class PacientPresenter extends BasePresenter {
 
     public function selectPacientFormSubmitted(UI\Form $form) {
 	$values = $form->getValues();
-	$this->redirect('Pacient:all', $values->oddeleni);
+	$this->redirect('this', $values->oddeleni);
+    }
+
+
+    /**
+     * Nehospitalizovani
+     */
+    public function renderNehospitalizovani($searchPhrase = "all")
+    {
+	if ($searchPhrase == "all")
+            $this->template->pacienti = $this->pacientRepository->findAllNehospitalizovani();
+	else if ($searchPhrase != NULL)
+            $this->template->pacienti = $this->pacientRepository->findInNehospitalizovani($searchPhrase);
+	else
+            $this->template->pacienti = NULL;
+    }
+
+    /**
+     * Vsichni
+     */
+    public function renderAll($searchPhrase = "all")
+    {
+	if ($searchPhrase == "all")
+            $this->template->pacienti = $this->pacientRepository->findAll();
+	else if ($searchPhrase != NULL)
+            $this->template->pacienti = $this->pacientRepository->searchInTable($searchPhrase);
+	else
+            $this->template->pacienti = NULL;
+    }
+
+    protected function createComponentSearchForm() {
+        $form = new UI\Form;
+	$form->addText('search', 'Hledat', 40);
+        $form->addSubmit('send', 'Hledat');
+        $form->onSuccess[] = callback($this, 'searchFormSubmitted');
+        return $form;
+    }
+
+    public function searchFormSubmitted(UI\Form $form) {
+	$values = $form->getValues();
+	if ($values->search != NULL)
+	    $this->redirect('this', $values->search);
+	else
+	    $this->redirect('this');
+    }
+
+    /**
+     * Pridani noveho
+     */
+    public function renderAdd()
+    {
+    }
+
+    protected function createComponentAddForm() {
+        $form = new UI\Form;
+        $form->addText('jmeno', 'Jméno', 50, 50)
+                 ->setRequired('Je potřeba uvést jméno.');
+        $form->addText('prijmeni', 'Příjmení', 50, 50)
+                 ->setRequired('Je potřeba uvést příjmení.');
+        $form->addText('rc', 'Rodné číslo', 12, 10)
+                 ->setRequired('Je potřeba uvést rodné číslo.')
+		 ->addRule(UI\Form::INTEGER, 'Zadejte prosím rodné číslo ve tvaru RRMMDDXXXX.');
+
+        $form->addSubmit('send', 'Přidat');
+        $form->onSuccess[] = callback($this, 'addSubmitted');
+
+        return $form;
+    }
+
+    public function addSubmitted(UI\Form $form) {
+	$values = $form->getValues();
+        $this->pacientRepository->addPacient($values->jmeno, $values->prijmeni, $values->rc);
+        $this->flashMessage('Pacient byl úspěšně přidán.', 'success');
+	$this->redirect('this');
     }
 }

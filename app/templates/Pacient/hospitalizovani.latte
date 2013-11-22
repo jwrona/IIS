@@ -1,19 +1,19 @@
 {block content}
-<h2>Zobrazení všech pacientů</h2>
-{form searchForm}
+<h2>Zobrazení aktuálně hospitalizovaných pacientů</h2>
+{form selectPacientForm}
     <div>
         {control $form errors}
-        {input search}{input send}
+        <b>Hospitalizováni na:</b> {input oddeleni}
     </div>
 {/form}
-
 {if $pacienti != NULL}
 <table>
     <thead>
-        <tr>
+        <tr>    
             <th>Jméno</th>
             <th>Příjmení</th>
             <th>Rodné číslo</th>
+            <th>Oddělení</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +22,7 @@
                 <td>{$pacient->jmeno}</td>
                 <td>{$pacient->prijmeni}</td>
                 <td>{$pacient->rodneCislo}</td>
+                <td>{$pacient->zkratkaOdd}</td>
             </tr>
         {/foreach}
     </tbody>
