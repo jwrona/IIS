@@ -32,19 +32,21 @@
         <table>
             <thead>
                 <tr>
+                    <th>Od</th>
+                    <th>Oddělení</th>
                     <th>Rodné číslo</th>
                     <th>Jméno</th>
                     <th>Příjmení</th>
-                    <th>Oddělení</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach $hospitalizace as $hosp}
                     <tr n:class="$iterator->isOdd() ? odd : even">
+                        <td>{$hosp->datumPrijeti|date:'j. n. Y'}</td>
+                        <td>{$hosp->zkratkaOdd}</td>
                         <td>{$hosp->rodneCislo}</td>
                         <td>{$hosp->jmeno}</td>
                         <td>{$hosp->prijmeni}</td>
-                        <td>{$hosp->zkratkaOdd}</td>
                         <td class="action"><a n:href="Hospitalizace:detail $hosp->IDhospitalizace" class="icon edit">Podrobnosti</a></td>
                         <td class="action"><a n:href="Hospitalizace:" class="icon delete">Smazat</a></td>
                     </tr>

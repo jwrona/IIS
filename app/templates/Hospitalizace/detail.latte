@@ -7,7 +7,7 @@
 <b>Příjmení: </b>{$pacient->prijmeni}<br>
 <b>Rodné číslo: </b>{$pacient->rodneCislo}<br>
 <br>
-<b>Ošetřující lékař: </b>{*$lekar->jmeno*} {*$lekar->prijmeni*}<br>
+<b>Ošetřující lékař: </b>{$lekar->jmeno} {$lekar->prijmeni}<br>
 
 <h2>Léky</h2>
 <table>
@@ -24,8 +24,8 @@
         {foreach $leky as $lek}
             <tr n:class="$iterator->isOdd() ? odd : even">
                 <td>{$lek->nazev}</td>
-                <td>{$lek->zacatekPodani}</td>
-                <td>{$lek->konecPodani}</td>
+                <td>{$lek->zacatekPodani|date:'j. n. Y'}</td>
+                <td>{$lek->konecPodani|date:'j. n. Y'}</td>
                 <td>{$lek->mnozstvi}</td>
                 <td>{$lek->zpusobPodani}</td>
             </tr>
@@ -47,7 +47,7 @@
     <tbody>
         {foreach $vysetreni as $vys}
             <tr n:class="$iterator->isOdd() ? odd : even">
-                <td>{$vys->CasProvedeni}</td>
+                <td>{$vys->CasProvedeni|date:'j. n. Y'}</td>
                 <td>{$vys->vysledek}</td>
             </tr>
         {/foreach}

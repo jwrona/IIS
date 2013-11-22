@@ -39,6 +39,7 @@ common:
 		oddeleniRepository: Todo\OddeleniRepository
 		lekRepository: Todo\LekRepository
 		hospitalizaceRepository: Todo\HospitalizaceRepository
+		vysetreniRepository: Todo\VysetreniRepository
 
 	factories:
 
