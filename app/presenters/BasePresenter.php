@@ -16,6 +16,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->user = $this->getUser();
     }
 
+    protected function checkLoggedIn()
+    {
+        if (!$this->getUser()->isLoggedIn()) {
+            if ($this->user->logoutReason === Nette\Security\IUserStorage::INACTIVITY) {
+                $this->flashMessage('Byl jste odhlášen z důvodu neaktivity. Posím přihlašte se znovu.');
+            }
+            $this->redirect('Sign:in');
+        }
+    }
+
     public function handleSignOut() {
         $this->user->logout();
         $this->flashMessage('Odhlaseni probehlo uspesne.', 'success');

@@ -13,9 +13,8 @@ class UvazekPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-        }
+        $this->checkLoggedIn();
+
         $this->uvazekRepository = $this->context->uvazekRepository;
         $this->oddeleniRepository = $this->context->oddeleniRepository;
     }

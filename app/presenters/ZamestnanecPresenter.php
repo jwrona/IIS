@@ -17,9 +17,7 @@ class ZamestnanecPresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-        }
+        $this->checkLoggedIn();
 
         if (!$this->getUser()->isinRole('administrator')) {
             $this->redirect('Err:access');

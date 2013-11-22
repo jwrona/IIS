@@ -9,10 +9,7 @@ class HospitalizacePresenter extends BasePresenter {
 
     protected function startup() {
         parent::startup();
-
-        if (!$this->getUser()->isLoggedIn()) {
-            $this->redirect('Sign:in');
-        }
+        $this->checkLoggedIn();
 
         $this->hospitalizaceRepository = $this->context->hospitalizaceRepository;
         $this->oddeleniRepository = $this->context->oddeleniRepository;
