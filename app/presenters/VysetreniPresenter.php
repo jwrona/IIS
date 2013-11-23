@@ -28,7 +28,7 @@ class VysetreniPresenter extends BasePresenter {
         $form->addHidden('IDlekare');
         $form->addHidden('rodneCislo');        
         $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
-        $form->addText('CasProvedeni', 'Datum');
+        $form->addText('CasProvedeni', 'Datum')->addRule(Form::FILLED, 'Je nutné vyplnit datum.');
         $form->addText('vysledek', 'Výsledek');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->AddVysetreniFormSubmitted;

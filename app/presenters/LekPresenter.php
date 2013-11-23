@@ -97,8 +97,8 @@ class LekPresenter extends BasePresenter {
         $form = new UI\Form;
         $form->addHidden('IDleku');
         $form->addHidden('rodneCislo');
-        $form->addText('zacatekPodani', 'Od');
-        $form->addText('konecPodani', 'Do');
+        $form->addText('zacatekPodani', 'Od')->addRule(Form::FILLED, 'Je nutné vyplnit datum.');
+        $form->addText('konecPodani', 'Do')->addRule(Form::FILLED, 'Je nutné vyplnit datum.');
         $form->addText('mnozstvi', 'Množství');
         $form->addText('opakovaniDenne', 'Opakování za den');
         $form->addText('zpusobPodani', 'Způsob podání');
