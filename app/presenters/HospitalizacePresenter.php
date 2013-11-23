@@ -21,7 +21,11 @@ class HospitalizacePresenter extends BasePresenter {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
                         $this->getUser()->getIdentity()->getId(), $zkratkaOdd);
             }
-            if ($this->getUser()->isinRole('sestra')) {
+            elseif ($this->getUser()->isinRole('sestra')) {
+                $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
+            }
+            else
+            {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
             }
         } else {
@@ -48,6 +52,9 @@ class HospitalizacePresenter extends BasePresenter {
         }
         if ($this->getUser()->isinRole('sestra')) {
             $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDsestry($this->getUser()->getIdentity()->getId());
+        }
+        if ($this->getUser()->isinRole('administrator')) {
+            $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazev();
         }
 
         $form->addSelect('oddeleni', 'Oddělení:', $oddeleni)

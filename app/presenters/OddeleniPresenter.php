@@ -40,7 +40,8 @@ class OddeleniPresenter extends BasePresenter {
 
     protected function createComponentOddeleniAddForm() {
         $form = new Form();
-        $form->addText('zkratkaOdd', 'Zkratka', 3, 3)->addRule(Form::FILLED, 'Je třeba zadat unikátní zkratku oddělení.');
+        $form->addText('zkratkaOdd', 'Zkratka', 3, 3)->addRule(Form::FILLED, 'Je třeba zadat unikátní zkratku oddělení.')
+                ->addRule(Form::PATTERN, 'Zkratka oddělení: tři písmena', '[A-Z|a-z]{3}');
         $form->addText('nazev', 'Název', 50, 50)->addRule(Form::FILLED, 'Je třeba zadat název oddělení.');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->oddeleniAddSubmitted;

@@ -48,7 +48,7 @@ class UvazekPresenter extends BasePresenter {
         $form->addHidden('IDzamestnance');
         $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
         $form->addText('typ', 'Typ', 50, 50)->addRule(Form::FILLED, 'Je potřeba typ úvazku.');
-        $form->addText('telefon', 'telefon', 9, 9);
+        $form->addText('telefon', 'telefon', 9, 9)->addRule(Form::PATTERN, 'Telefon: Devítimístné číslo', '[0-9]{9}');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->uvazekEditSubmitted;
         return $form;
@@ -66,7 +66,7 @@ class UvazekPresenter extends BasePresenter {
         $form->addHidden('IDzamestnance');
         $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
         $form->addText('typ', 'Typ', 50, 50)->addRule(Form::FILLED, 'Je potřeba typ úvazku.');
-        $form->addText('telefon', 'telefon', 9, 9);
+        $form->addText('telefon', 'telefon', 9, 9)->addRule(Form::PATTERN, 'Telefon: Devítimístné číslo', '[0-9]{9}');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->uvazekAddSubmitted;
         return $form;

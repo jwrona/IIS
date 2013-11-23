@@ -28,7 +28,7 @@ class OddeleniRepository extends Repository {
     }
 
     public function findAllOddeleni() {
-        return $this->findAll();
+        return $this->findAll()->where('erased', 0);
     }
 
     public function findOddeleni($zkratkaOdd) {
@@ -46,7 +46,7 @@ class OddeleniRepository extends Repository {
     }
 
     public function deleteOddeleni($zkratkaOdd) {
-        //$this->findAll()->where('zkratkaOdd', $zkratkaOdd)->update('erased', 1);
+        $this->findAll()->where('zkratkaOdd', $zkratkaOdd)->update(array('erased' => 1));
     }
 
 }

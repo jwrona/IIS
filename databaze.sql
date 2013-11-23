@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS `nemocnice`.`oddeleni`;
 CREATE TABLE `nemocnice`.`oddeleni` (
   `zkratkaOdd` char(3) NOT NULL,
   `nazev` varchar(100) NOT NULL,
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`zkratkaOdd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,6 +69,7 @@ CREATE TABLE `nemocnice`.`hospitalizace` (
   `zkratkaOdd` char(3) NOT NULL,
   `IDLekare` int(10) unsigned NOT NULL,
   `rodneCislo` char(11) NOT NULL,
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`IDhospitalizace`),
   CONSTRAINT `fk_oddeleniHospitalizace` FOREIGN KEY (`zkratkaOdd`) REFERENCES `oddeleni` (`zkratkaOdd`),
   CONSTRAINT `fk_lekarHospitalizace` FOREIGN KEY (`IDlekare`) REFERENCES `zamestnanec` (`IDzamestnance`),
@@ -95,6 +97,7 @@ CREATE TABLE `nemocnice`.`vysetreni` (
   `zkratkaOdd` char(3) NOT NULL,
   `IDlekare` int(10) unsigned NOT NULL,
   `rodneCislo` char(11) NOT NULL,
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`IDvysetreni`),
   CONSTRAINT `fk_oddeleniVysetreni` FOREIGN KEY (`zkratkaOdd`) REFERENCES `oddeleni` (`zkratkaOdd`),
   CONSTRAINT `fk_lekarVysetreni` FOREIGN KEY (`IDlekare`) REFERENCES `zamestnanec` (`IDzamestnance`),
@@ -112,6 +115,7 @@ CREATE TABLE `nemocnice`.`podaniLeku` (
   `zpusobPodani` varchar(100),
   `rodneCislo` char(11) NOT NULL,
   `IDleku` int(10) unsigned NOT NULL,
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`IDpodaniLeku`),
   CONSTRAINT `fk_pacientPodani` FOREIGN KEY (`rodneCislo`) REFERENCES `pacient` (`rodneCislo`),
   CONSTRAINT `fk_lekPodani` FOREIGN KEY (`IDleku`) REFERENCES `lek` (`IDleku`)
@@ -154,8 +158,8 @@ INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmen
 
 -- Hospitalizace
 INSERT INTO `nemocnice`.`hospitalizace` (`datumPrijeti`, `datumPropusteni`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
-(2013-02-08, 2013-02-15, 'ARO', 2, '1305061122'),
-(2013-03-08, 2013-02-15, 'JIP', 3, '4505061122');
+('2013-02-08', '2013-02-15', 'ARO', 2, '1305061122'),
+('2013-03-08', '2013-02-15', 'JIP', 3, '4505061122');
 
 -- Uvazek
 INSERT INTO `nemocnice`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvazku`) VALUES
@@ -164,13 +168,13 @@ INSERT INTO `nemocnice`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvaz
 
 -- Vysetreni
 INSERT INTO `nemocnice`.`vysetreni` (`CasProvedeni`, `vysledek`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
-(2013-02-08,'Lorem ipsum generator','ARO',2,'1305061122'),
-(2013-02-12,'Ipsum lorem generator','JIP',3,'4505061122');
+('2013-02-08','Lorem ipsum generator','ARO',2,'1305061122'),
+('2013-02-12','Ipsum lorem generator','JIP',3,'4505061122');
 
 -- Podani leku
 INSERT INTO `nemocnice`.`podaniLeku` (`zacatekPodani`, `konecPodani`, `mnozstvi`, `opakovaniDenne`, `zpusobPodani`, `rodneCislo`, `IDleku`) VALUES
-(2013-02-08,2013-02-15,3,1,'oralne','1305061122',1),
-(2013-02-11,2013-03-31,6,3,'analne','1305061122',1);
+('2013-02-08','2013-02-15',3,1,'oralne','1305061122',1),
+('2013-02-11','2013-03-31',6,3,'analne','1305061122',1);
 
 -- ---------------------------------------------------------------------------
 -- Konec skriptu pro vytvoření databáze

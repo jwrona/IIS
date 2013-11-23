@@ -41,7 +41,7 @@ class HospitalizaceRepository extends Repository {
     public function findLeky($IDhospitalizace) {
         return $this->connection->query(
                         'SELECT *
-                         FROM hospitalizace, podaniLeku, lek
+                         FROM hospitalizace, lek, podaniLeku
                          WHERE ' . $IDhospitalizace . ' = hospitalizace.IDhospitalizace '
                         . ' AND hospitalizace.rodneCislo = podaniLeku.rodneCislo'
                         . ' AND lek.IDleku = podaniLeku.IDleku'

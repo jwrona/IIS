@@ -1,6 +1,6 @@
 <?php
 
-use Nette\Application\UI;
+use Nette\Application\UI\Form;
 use Nette\Security as NS;
 
 class LekPresenter extends BasePresenter {
@@ -33,14 +33,14 @@ class LekPresenter extends BasePresenter {
     }
 
     protected function createComponentSearchForm() {
-        $form = new UI\Form;
+        $form = new Form;
         $form->addText('search', 'Hledat', 40);
         $form->addSubmit('send', 'Hledat');
         $form->onSuccess[] = callback($this, 'searchFormSubmitted');
         return $form;
     }
 
-    public function searchFormSubmitted(UI\Form $form) {
+    public function searchFormSubmitted(Form $form) {
         $values = $form->getValues();
         if ($values->search != NULL) {
             $this->redirect('this', $values->search);
@@ -49,7 +49,7 @@ class LekPresenter extends BasePresenter {
         }
     }
 
-    public function renderPrescribe($rodneCislo, $searchPhrase = "all") {
+    public function renderPrescribe($searchPhrase = "all", $rodneCislo) {
         $this->template->rodneCislo = $rodneCislo;
 
         $prescribeSearchForm = $this['prescribeSearchForm'];
@@ -66,7 +66,7 @@ class LekPresenter extends BasePresenter {
     }
 
     protected function createComponentPrescribeSearchForm() {
-        $form = new UI\Form;
+        $form = new Form;
         $form->addHidden('rodneCislo');
         $form->addText('search', 'Hledat', 40);
         $form->addSubmit('send', 'Hledat');
@@ -74,12 +74,12 @@ class LekPresenter extends BasePresenter {
         return $form;
     }
 
-    public function prescribeSearchFormSubmitted(UI\Form $form) {
+    public function prescribeSearchFormSubmitted(Form $form) {
         $values = $form->getValues();
         if ($values->search != NULL) {
             $this->redirect('this', $values->search, $values->rodneCislo);
         } else {
-            $this->redirect('this', $values->rodneCislo);
+            $this->redirect('this', 'all', $values->rodneCislo);
         }
     }
 
@@ -94,20 +94,22 @@ class LekPresenter extends BasePresenter {
     }
 
     protected function createComponentAddLekForm() {
-        $form = new UI\Form;
+        $form = new Form;
         $form->addHidden('IDleku');
         $form->addHidden('rodneCislo');
-        $form->addText('zacatekPodani', 'Od')->addRule(Form::FILLED, 'Je nutné vyplnit datum.');
-        $form->addText('konecPodani', 'Do')->addRule(Form::FILLED, 'Je nutné vyplnit datum.');
-        $form->addText('mnozstvi', 'Množství');
-        $form->addText('opakovaniDenne', 'Opakování za den');
+        $form->addText('zacatekPodani', 'Od')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+        $form->addText('konecPodani', 'Do')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+        $form->addText('mnozstvi', 'Množství')->addRule(Form::PATTERN, 'Celé číslo', '[0-9]*');
+        $form->addText('opakovaniDenne', 'Opakování za den')->addRule(Form::PATTERN, 'Celé číslo', '[0-9]*');
         $form->addText('zpusobPodani', 'Způsob podání');
         $form->addSubmit('set', 'Předepsat');
         $form->onSuccess[] = $this->addLekFormSubmitted;
         return $form;
     }
 
-    public function addLekFormSubmitted(UI\Form $form) {
+    public function addLekFormSubmitted(Form $form) {
         $values = $form->getValues();
         $this->podaniLekuRepository->addPodaniLeku($values->IDleku, 
                                             $values->rodneCislo, 

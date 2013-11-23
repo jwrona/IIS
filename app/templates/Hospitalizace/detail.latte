@@ -16,7 +16,7 @@
             <th>Název</th>
             <th>Od</th>
             <th>Do</th>
-            <th>Dávka</th>
+            <th>Denně</th>
             <th>Podání</th>
         </tr>
     </thead>
@@ -26,7 +26,7 @@
                 <td>{$lek->nazev}</td>
                 <td>{$lek->zacatekPodani|date:'j. n. Y'}</td>
                 <td>{$lek->konecPodani|date:'j. n. Y'}</td>
-                <td>{$lek->mnozstvi}</td>
+                <td>{$lek->opakovaniDenne}</td>
                 <td>{$lek->zpusobPodani}</td>
             </tr>
         {/foreach}
@@ -34,7 +34,7 @@
 </table>
 
 {if $user->isInRole('lekar')}
-    <a n:href="Lek:prescribe $pacient->rodneCislo" class="icon edit">Přidat lék</a>
+    <a n:href="Lek:prescribe 'all', $pacient->rodneCislo" class="icon edit">Přidat lék</a>
 {/if}
 <h2>Vyšetření</h2>
 
