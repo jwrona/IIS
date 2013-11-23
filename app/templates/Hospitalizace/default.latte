@@ -2,55 +2,40 @@
 
 <h1 n:block="title">Hospitalizace</h1> 
 
-{form searchHospitalizaceForm}
+{form selectHospitalizaceForm}
     <div>
         {control $form errors}
+        <b>Oddělení:</b> {input oddeleni}
+    </div>
+{/form}
 
-        <div>
-            {label oddeleni /}
-            <div class="input">{input oddeleni}</div>
-        </div>
-        <div>
-            {label set /}
-            <div class="submitt">{input set}</div>
-        </div>
-    {/form}
-
-
-    {form viewAllButton}
-        <div>
-            {control $form errors}
-
-            <div>
-                {label set /}
-                <div class="submitt">{input set}</div>
-            </div>
-        {/form}
-        <br>
-        <a n:href="Pacient:" class="icon edit">Přidat hospitalizaci</a>
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <th>Od</th>
-                    <th>Oddělení</th>
-                    <th>Rodné číslo</th>
-                    <th>Jméno</th>
-                    <th>Příjmení</th>
+{if $hospitalizace != NULL}
+    <br>
+    <a n:href="Pacient:all" class="icon edit">Přidat hospitalizaci</a>
+    <br>
+    <table>
+        <thead>
+            <tr>
+                <th>Od</th>
+                <th>Oddělení</th>
+                <th>Rodné číslo</th>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $hospitalizace as $hosp}
+                <tr n:class="$iterator->isOdd() ? odd : even">
+                    <td>{$hosp->datumPrijeti|date:'j. n. Y'}</td>
+                    <td>{$hosp->zkratkaOdd}</td>
+                    <td>{$hosp->rodneCislo}</td>
+                    <td>{$hosp->jmeno}</td>
+                    <td>{$hosp->prijmeni}</td>
+                    <td class="action"><a n:href="Hospitalizace:detail $hosp->IDhospitalizace" class="icon edit">Podrobnosti</a></td>
+                    <td class="action"><a n:href="Hospitalizace:" class="icon delete">Smazat</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                {foreach $hospitalizace as $hosp}
-                    <tr n:class="$iterator->isOdd() ? odd : even">
-                        <td>{$hosp->datumPrijeti|date:'j. n. Y'}</td>
-                        <td>{$hosp->zkratkaOdd}</td>
-                        <td>{$hosp->rodneCislo}</td>
-                        <td>{$hosp->jmeno}</td>
-                        <td>{$hosp->prijmeni}</td>
-                        <td class="action"><a n:href="Hospitalizace:detail $hosp->IDhospitalizace" class="icon edit">Podrobnosti</a></td>
-                        <td class="action"><a n:href="Hospitalizace:" class="icon delete">Smazat</a></td>
-                    </tr>
-                {/foreach}
-            </tbody>
-        </table>
-        {/block}
+            {/foreach}
+        </tbody>
+    </table>
+{/if}
+{/block}

@@ -1,0 +1,35 @@
+{block content}
+
+<h1 n:block="title">Naordinovat lék</h1> 
+
+{form addLekForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label zacatekPodani /}
+            <div class="input">{input zacatekPodani}</div>
+        </div>
+        <div>
+            {label konecPodani /}
+            <div class="input">{input konecPodani}</div>
+        </div>
+        <div>
+            {label mnozstvi /}
+            <div class="input">{input mnozstvi}</div>
+        </div>
+        <div>
+            {label zpusobPodani /}
+            <div class="input">{input zpusobPodani}</div>
+        </div>
+        <div>
+            {label opakovaniDenne /}
+            <div class="input">{input opakovaniDenne}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+    
+{/block}

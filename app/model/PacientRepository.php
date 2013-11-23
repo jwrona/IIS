@@ -8,6 +8,10 @@ class PacientRepository extends Repository {
     public function findByName($jmeno) {
         return $this->findAll()->where('jmeno', $jmeno)->fetch();
     }
+    
+    public function findByRodneCislo($rodneCislo) {
+        return $this->findAll()->where('rodneCislo', $rodneCislo)->fetch();
+    }
 
     public function findByOddeleni($zkratkaOdd)
     {

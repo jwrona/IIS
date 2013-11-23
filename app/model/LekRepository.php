@@ -14,4 +14,13 @@ class LekRepository extends Repository {
         return $this->findAll()->where('nazev', $nazev);
     }
 
+    public function searchInTable($phrase) {
+        $queryStr = "SELECT * 
+                     FROM lek
+                     WHERE (nazev LIKE '$phrase')
+                     OR (ucinnaLatka LIKE '$phrase');";
+
+        return $this->getConnection()->query($queryStr);
+    }
+
 }

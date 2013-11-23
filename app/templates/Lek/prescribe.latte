@@ -2,7 +2,7 @@
 
 <h1 n:block="title">Přehled léků</h1>
 
-{form searchForm}
+{form prescribeSearchForm}
     <div>
         {control $form errors}
         {input search}{input send}
@@ -30,6 +30,7 @@
                     <td>{$lek->pouziti}</td>
                     <td>{$lek->zpusobPodani}</td>
                     <td>{$lek->kontraindikace}</td>
+                    <td class="action"><a n:href="Lek:add $rodneCislo, $lek->IDleku" class="icon user">Předepsat</a></td>
                 </tr>
             {/foreach}
         </tbody>

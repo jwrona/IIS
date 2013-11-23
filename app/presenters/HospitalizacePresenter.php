@@ -1,6 +1,6 @@
 <?php
 
-use Nette\Application\UI\Form;
+use Nette\Application\UI;
 
 class HospitalizacePresenter extends BasePresenter {
 
@@ -15,8 +15,14 @@ class HospitalizacePresenter extends BasePresenter {
         $this->oddeleniRepository = $this->context->oddeleniRepository;
     }
 
-    public function renderDefault() {
-        $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+    public function renderDefault($zkratkaOdd) {
+        if ($zkratkaOdd != NULL) {
+            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
+                                                                             $this->getUser()->getIdentity()->getId(),
+                                                                             $zkratkaOdd);
+        } else {
+            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+        }
     }
 
     public function renderDetail($IDhospitalizace) {
@@ -26,43 +32,25 @@ class HospitalizacePresenter extends BasePresenter {
         $this->template->lekar = $this->hospitalizaceRepository->findLekar($IDhospitalizace);
     }
 
-    public function renderSearch($zkratkaOdd) {
-        if ($zkratkaOdd == NULL) {
-            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
-        } else {
-            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
-                                                                             $this->getUser()->getIdentity()->getId(),
-                                                                             $zkratkaOdd);
-        }
-    }
-    
     public function renderAdd($rodneCislo) {
         //$this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
     }
 
-    protected function createComponentSearchHospitalizaceForm() {
-        $form = new Form();
-        $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId()));
-        $form->addSubmit('set', 'Zobrazit');
-        $form->onSuccess[] = $this->SearchHospitalizaceFormSubmitted;
+    protected function createComponentSelectHospitalizaceForm() {
+        $form = new UI\Form;
+        $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId());
+
+        $form->addSelect('oddeleni', 'Oddělení:', $oddeleni)
+                ->setPrompt("Zvolte oddělení")   // je možné předat text i prvek HTML
+                ->setAttribute('onchange', 'submit()');
+
+        $form->onSuccess[] = callback($this, 'selectHospitalizaceFormSubmitted');
         return $form;
     }
 
-    public function SearchHospitalizaceFormSubmitted(Form $form) {
+    public function selectHospitalizaceFormSubmitted(UI\Form $form) {
         $values = $form->getValues();
-        $this->redirect('Hospitalizace:search', $values->oddeleni);
-    }
-
-    protected function createComponentViewAllButton() {
-        $form = new Form();
-        $form->addSubmit('set', 'Zobrazit vše');
-        $form->onSuccess[] = $this->ViewAllButtonSubmitted;
-        return $form;
-    }
-
-    public function ViewAllButtonSubmitted(Form $form) {
-        $values = $form->getValues();
-        $this->redirect('Hospitalizace:');
+        $this->redirect('this', $values->oddeleni);
     }
 
 }
