@@ -11,7 +11,9 @@
 
 {if $hospitalizace != NULL}
     <br>
+    {if $user->isInRole('lekar')}
     <a n:href="Pacient:all" class="icon edit">Přidat hospitalizaci</a>
+    {/if}
     <br>
     <table>
         <thead>
@@ -32,7 +34,6 @@
                     <td>{$hosp->jmeno}</td>
                     <td>{$hosp->prijmeni}</td>
                     <td class="action"><a n:href="Hospitalizace:detail $hosp->IDhospitalizace" class="icon edit">Podrobnosti</a></td>
-                    <td class="action"><a n:href="Hospitalizace:" class="icon delete">Smazat</a></td>
                 </tr>
             {/foreach}
         </tbody>

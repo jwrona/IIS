@@ -17,9 +17,13 @@ class HospitalizacePresenter extends BasePresenter {
 
     public function renderDefault($zkratkaOdd) {
         if ($zkratkaOdd != NULL) {
-            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
-                                                                             $this->getUser()->getIdentity()->getId(),
-                                                                             $zkratkaOdd);
+            if ($this->getUser()->isinRole('lekar')) {
+                $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
+                        $this->getUser()->getIdentity()->getId(), $zkratkaOdd);
+            }
+            if ($this->getUser()->isinRole('sestra')) {
+                $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
+            }
         } else {
             $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
         }
@@ -38,7 +42,13 @@ class HospitalizacePresenter extends BasePresenter {
 
     protected function createComponentSelectHospitalizaceForm() {
         $form = new UI\Form;
-        $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId());
+
+        if ($this->getUser()->isinRole('lekar')) {
+            $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId());
+        }
+        if ($this->getUser()->isinRole('sestra')) {
+            $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDsestry($this->getUser()->getIdentity()->getId());
+        }
 
         $form->addSelect('oddeleni', 'Oddělení:', $oddeleni)
                 ->setPrompt("Zvolte oddělení")   // je možné předat text i prvek HTML

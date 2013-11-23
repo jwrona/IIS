@@ -14,6 +14,14 @@ class OddeleniRepository extends Repository {
                                  WHERE ' . $IDlekare . ' = uvazek.IDlekare AND uvazek.zkratkaOdd = oddeleni.zkratkaOdd'
                 )->fetchPairs('zkratkaOdd', 'nazev');
     }
+    
+    public function findPairsZkratkaOddNazevIDsestry($IDsestry) {
+        return $this->connection->query(
+                        'SELECT zamestnanec.zkratkaOdd, oddeleni.nazev 
+                                 FROM oddeleni, zamestnanec
+                                 WHERE ' . $IDsestry . ' = zamestnanec.IDzamestnance AND oddeleni.zkratkaOdd = zamestnanec.zkratkaOdd'
+                )->fetchPairs('zkratkaOdd', 'nazev');
+    }
 
     public function findPairsZkratkaOddNazev() {
         return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');

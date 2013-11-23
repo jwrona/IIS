@@ -11,7 +11,12 @@ class HospitalizaceRepository extends Repository {
     }
 
     public function findByZkratkaOdd($zkratkaOdd) {
-        return $this->findAll()->where('zkratkaOdd', $zkratkaOdd)->where('IDlekare', 2);
+        return $this->connection->query(
+                        'SELECT *
+                         FROM hospitalizace, pacient
+                         WHERE hospitalizace.rodneCislo = pacient.rodneCislo'
+                        . ' AND "' . $zkratkaOdd . '" = hospitalizace.zkratkaOdd'
+        );
     }
 
     public function findByIDlekare($IDlekare) {
