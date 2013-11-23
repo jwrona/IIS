@@ -29,7 +29,7 @@ class HospitalizacePresenter extends BasePresenter {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
             }
         } else {
-            $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+            $this->template->hospitalizace = NULL;
         }
     }
 

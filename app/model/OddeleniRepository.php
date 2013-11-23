@@ -11,7 +11,7 @@ class OddeleniRepository extends Repository {
         return $this->connection->query(
                         'SELECT uvazek.zkratkaOdd, oddeleni.nazev 
                                  FROM oddeleni, uvazek
-                                 WHERE ' . $IDlekare . ' = uvazek.IDlekare AND uvazek.zkratkaOdd = oddeleni.zkratkaOdd'
+                                 WHERE ' . $IDlekare . ' = uvazek.IDlekare AND uvazek.zkratkaOdd = oddeleni.zkratkaOdd AND oddeleni.erased = 0'
                 )->fetchPairs('zkratkaOdd', 'nazev');
     }
     
@@ -19,12 +19,14 @@ class OddeleniRepository extends Repository {
         return $this->connection->query(
                         'SELECT zamestnanec.zkratkaOdd, oddeleni.nazev 
                                  FROM oddeleni, zamestnanec
-                                 WHERE ' . $IDsestry . ' = zamestnanec.IDzamestnance AND oddeleni.zkratkaOdd = zamestnanec.zkratkaOdd'
+                                 WHERE ' . $IDsestry . ' = zamestnanec.IDzamestnance '
+                                         . 'AND oddeleni.zkratkaOdd = zamestnanec.zkratkaOdd '
+                                         . 'AND oddeleni.erased = 0'
                 )->fetchPairs('zkratkaOdd', 'nazev');
     }
 
     public function findPairsZkratkaOddNazev() {
-        return $this->getTable()->fetchPairs('zkratkaOdd', 'nazev');
+        return $this->getTable()->where('erased', 0)->fetchPairs('zkratkaOdd', 'nazev');
     }
 
     public function findAllOddeleni() {
@@ -32,7 +34,7 @@ class OddeleniRepository extends Repository {
     }
 
     public function findOddeleni($zkratkaOdd) {
-        return $this->findAll()->where('zkratkaOdd', $zkratkaOdd)->fetch();
+        return $this->findAll()->where('zkratkaOdd', $zkratkaOdd)->where('erased', 0)->fetch();
     }
 
     public function addOddeleni($zkratkaOdd, $nazev) {
