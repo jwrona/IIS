@@ -23,6 +23,10 @@
                 <td>{$pacient->jmeno}</td>
                 <td>{$pacient->prijmeni}</td>
                 <td>{$pacient->rodneCislo}</td>
+                <td class="action"><a n:href="Pacient:detail $pacient->rodneCislo" class="icon user">Detaily</a></td>
+                <td class="action"><a n:href="Pacient:edit $pacient->rodneCislo" class="icon edit">Upravit</a></td>
+                <td class="action"><a n:href="Pacient:delete $pacient->rodneCislo" class="icon delete">Smazat</a></td>
+                <td class="action"><a n:href="Pacient:hospitalizovat $pacient->rodneCislo" class="icon hosp">Hospitalizovat</a></td>
             </tr>
         {/foreach}
     </tbody>

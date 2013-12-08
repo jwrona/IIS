@@ -2,6 +2,9 @@
 
 
 use Nette\Application\UI;
+use Nette\Diagnostics\Debugger;
+
+Debugger::enable(); // aktivujeme Laděnku
 
 /**
  * Homepage presenter.
@@ -27,7 +30,7 @@ class PacientPresenter extends BasePresenter {
 
     public function renderDefault()
     {
-        //$this->redirect('all', 'abc');
+        $this->redirect('all');
     }
 
     /**
@@ -69,11 +72,13 @@ class PacientPresenter extends BasePresenter {
     public function renderNehospitalizovani($searchPhrase = "all")
     {
 	if ($searchPhrase == "all")
-            $this->template->pacienti = $this->pacientRepository->findAllNehospitalizovani();
+            $pacienti = $this->pacientRepository->findAllNehospitalizovani();
 	else if ($searchPhrase != NULL)
-            $this->template->pacienti = $this->pacientRepository->findInNehospitalizovani($searchPhrase);
+            $pacienti = $this->pacientRepository->findInNehospitalizovani($searchPhrase);
 	else
-            $this->template->pacienti = NULL;
+            $pacienti = NULL;
+
+	$this->template->pacienti = $pacienti;
     }
 
     /**
@@ -132,6 +137,73 @@ class PacientPresenter extends BasePresenter {
 	$values = $form->getValues();
         $this->pacientRepository->addPacient($values->jmeno, $values->prijmeni, $values->rc);
         $this->flashMessage('Pacient byl úspěšně přidán.', 'success');
-	$this->redirect('this');
+	$this->redirect('all');
+    }
+
+    /**
+     * Zobrazeni detailu
+     */
+    public function renderDetail($rodneCislo)
+    {
+	if ($rodneCislo != NULL)
+        {
+            $this->template->pacient = $this->pacientRepository->findByRodneCislo($rodneCislo);
+            $this->template->hospitalizovan = $this->pacientRepository->findHospitalizovanNyni($rodneCislo);
+            $this->template->pocetHospitalizaci = $this->pacientRepository->findPocetHospitalizaci($rodneCislo);
+        }
+    }
+
+    /**
+     * Editace pacienta
+     */
+    public function renderEdit($rodneCislo) {
+	    $this->template->pacient = $this->pacientRepository->findByRodneCislo($rodneCislo);
+        }
+
+    protected function createComponentEditForm() {
+	$pacient = $this->pacientRepository->findByRodneCislo($this->getParam('rodneCislo'));
+        $form = new UI\Form;
+        $form->addText('jmeno', 'Jméno', 50, 50)
+                 ->setRequired('Je potřeba uvést jméno.')
+                 ->setDefaultValue($pacient->jmeno);
+        $form->addText('prijmeni', 'Příjmení', 50, 50)
+                 ->setRequired('Je potřeba uvést příjmení.')
+                 ->setDefaultValue($pacient->prijmeni);
+        $form->addHidden('rc')->setDefaultValue($pacient->rodneCislo);
+
+        $form->addSubmit('send', 'Uložit změny');
+        $form->onSuccess[] = callback($this, 'editSubmitted');
+
+        return $form;
+    }
+
+    public function editSubmitted(UI\Form $form) {
+	$values = $form->getValues();
+        $this->pacientRepository->editPacient($values->jmeno, $values->prijmeni, $values->rc);
+        $this->flashMessage('Pacient byl úspěšně změněn.', 'success');
+	$this->redirect('all');
+    }
+
+    /**
+     * Smazání pacienta
+     */
+    public function actionDelete($rodneCislo) {
+        $this->pacientRepository->deletePacient($rodneCislo);
+        $this->flashMessage('Pacient byl vymazán.', 'success');
+	$this->redirect('all');
+    }
+
+    /**
+     * Hospitalizace pacienta
+     */
+    public function actionHospitalizovat($rodneCislo) {
+	$this->redirect('all', $rodneCislo);
+    }
+
+    /**
+     * Hospitalizace pacienta
+     */
+    public function actionAddVysetreni($rodneCislo) {
+	$this->redirect('all', $rodneCislo);
     }
 }

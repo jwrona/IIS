@@ -1,0 +1,20 @@
+{block content}
+<h2>Úprava pacienta</h2>
+{form editForm}
+<div>
+{control $form errors}
+    <div>
+	{label jmeno /}
+	<div class="input">{input jmeno}<span class="req">*</span></div>
+    </div>
+    <div>
+	{label prijmeni /}
+	<div class="input">{input prijmeni}<span class="req">*</span></div>
+    </div>
+    <div>
+	{label send /}
+	<div class="submit">{input send}</div>
+    </div>
+</div>
+{/form}
+{/block}

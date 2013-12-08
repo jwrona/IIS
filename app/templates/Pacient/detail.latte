@@ -1,0 +1,21 @@
+{block content}
+<h1 n:block="title">Detail pacienta {$pacient->jmeno} {$pacient->prijmeni}</h1>
+<p>
+<h2>Osobní detaily</h2>
+<b>Jméno: </b>{$pacient->jmeno}<br>
+<b>Příjmení: </b>{$pacient->prijmeni}<br>
+<b>Rodné číslo: </b>{$pacient->rodneCislo}<br>
+</p>
+<p>
+{if $hospitalizovan}
+<b>Aktuálně hospitalizován</b>
+{else}
+<b>Aktuálně nehospitalizován</b>
+{/if}
+</p>
+<p>
+<b>Celkový počet hospitalizací: </b>{$pocetHospitalizaci}<br>
+</p>
+<a n:href="Pacient:edit $pacient->rodneCislo" class="icon edit">Upravit</a>
+
+{/block}

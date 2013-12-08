@@ -12,6 +12,31 @@ class PacientRepository extends Repository {
     public function findByRodneCislo($rodneCislo) {
         return $this->findAll()->where('rodneCislo', $rodneCislo)->fetch();
     }
+    
+    public function findDetailsByRodneCislo($rodneCislo) {
+	$queryStr = "SELECT *
+                     FROM pacient AS p
+                         JOIN hospitalizace AS h ON p.rodnecislo = h.rodnecislo
+                     WHERE h.zkratkaOdd = '$zkratkaOdd'";
+
+        return $this->getConnection()->query($queryStr);
+    }
+    
+    public function findHospitalizovanNyni($rodneCislo) {
+	$queryStr = "SELECT *
+                     FROM pacient AS p JOIN hospitalizace AS h ON p.rodneCislo = h.rodneCislo
+                     WHERE p.rodneCislo = '$rodneCislo' AND h.datumPropusteni IS NULL";
+
+        return $this->getConnection()->query($queryStr)->getRowCount();
+    }
+    
+    public function findPocetHospitalizaci($rodneCislo) {
+	$queryStr = "SELECT *
+                     FROM pacient AS p JOIN hospitalizace AS h ON p.rodneCislo = h.rodneCislo
+                     WHERE p.rodneCislo = '$rodneCislo'";
+
+        return $this->getConnection()->query($queryStr)->getRowCount();
+    }
 
     public function findByOddeleni($zkratkaOdd)
     {
@@ -46,7 +71,7 @@ class PacientRepository extends Repository {
     {
 	$queryStr = "SELECT p.jmeno, p.prijmeni, p.rodneCislo
                      FROM pacient AS p LEFT JOIN hospitalizace AS h ON p.rodneCislo = h.rodneCislo
-                     WHERE h.IDhospitalizace IS NULL;";
+                     WHERE h.IDhospitalizace IS NULL AND p.erased = false;";
 
         return $this->getConnection()->query($queryStr);
     }
@@ -61,5 +86,15 @@ class PacientRepository extends Repository {
                           OR (p.rodneCislo LIKE '$phrase'));";
 
         return $this->getConnection()->query($queryStr);
+    }
+
+    public function editPacient($jmeno, $prijmeni, $rodneCislo) {
+        $this->findBy(array('rodneCislo' => $rodneCislo))->update(
+                array('jmeno' => $jmeno,
+                    'prijmeni' => $prijmeni));
+    }
+
+    public function deletePacient($rodneCislo) {
+        $this->findBy(array('rodneCislo' => $rodneCislo))->update(array('erased' => 1));
     }
 }
