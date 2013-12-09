@@ -23,7 +23,7 @@ class OddeleniPresenter extends BasePresenter {
     public function renderDefault() {
         $this->template->oddeleni = $this->oddeleniRepository->findAllOddeleni();
     }
-    
+
     public function renderEdit($zkratkaOdd) {
         $this->template->oddeleni = $this->oddeleniRepository->findOddeleni($zkratkaOdd);
         $oddeleniEditForm = $this['oddeleniEditForm'];
@@ -50,12 +50,17 @@ class OddeleniPresenter extends BasePresenter {
 
     public function oddeleniAddSubmitted(Form $form) {
         $values = $form->getValues();
-        $this->oddeleniRepository->addOddeleni($values->zkratkaOdd, $values->nazev);
+        try {
+            $this->oddeleniRepository->addOddeleni($values->zkratkaOdd, $values->nazev);
+        } catch (Exception $exc) {
+            $this->flashMessage('Chyba - Oddělení nebylo přidáno.', 'error');
+            return;
+        }
         $this->flashMessage('Oddělení bylo přidáno.', 'success');
         $this->redirect('Oddeleni:');
     }
-    
-     protected function createComponentOddeleniEditForm() {
+
+    protected function createComponentOddeleniEditForm() {
         $form = new Form();
         $form->addHidden('zkratkaOdd');
         $form->addText('nazev', 'Název', 50, 50)->addRule(Form::FILLED, 'Je třeba zadat název oddělení.');
@@ -70,4 +75,5 @@ class OddeleniPresenter extends BasePresenter {
         $this->flashMessage('Oddělení bylo zmeneno.', 'success');
         $this->redirect('Oddeleni:');
     }
+
 }

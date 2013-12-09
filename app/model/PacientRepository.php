@@ -25,7 +25,7 @@ class PacientRepository extends Repository {
     public function findHospitalizovanNyni($rodneCislo) {
 	$queryStr = "SELECT *
                      FROM pacient AS p JOIN hospitalizace AS h ON p.rodneCislo = h.rodneCislo
-                     WHERE p.rodneCislo = '$rodneCislo' AND h.datumPropusteni IS NULL";
+                     WHERE p.rodneCislo = '$rodneCislo' AND h.datumPropusteni IS NULL AND p.erased = false";
 
         return $this->getConnection()->query($queryStr)->getRowCount();
     }
@@ -43,7 +43,7 @@ class PacientRepository extends Repository {
 	$queryStr = "SELECT *
                      FROM pacient AS p
                          JOIN hospitalizace AS h ON p.rodnecislo = h.rodnecislo
-                     WHERE h.zkratkaOdd = '$zkratkaOdd'";
+                     WHERE h.zkratkaOdd = '$zkratkaOdd' AND p.erased = false";
 
         return $this->getConnection()->query($queryStr);
     }
@@ -81,6 +81,7 @@ class PacientRepository extends Repository {
 	$queryStr = "SELECT p.jmeno, p.prijmeni, p.rodneCislo
                      FROM pacient AS p LEFT JOIN hospitalizace AS h ON p.rodneCislo = h.rodneCislo
                      WHERE h.IDhospitalizace IS NULL
+                     AND p.erased = false
                      AND ((p.jmeno LIKE '$phrase')
                           OR (p.prijmeni LIKE '$phrase')
                           OR (p.rodneCislo LIKE '$phrase'));";
