@@ -2,6 +2,12 @@
 
 <h1 n:block="title">Hospitalizace</h1> 
 
+{if $user->isInRole('lekar')}
+    <a n:href="Pacient:nehospitalizovani" class="icon edit">Přidat hospitalizaci</a>
+    <br>
+<br>
+{/if}
+
 {form selectHospitalizaceForm}
     <div>
         {control $form errors}
@@ -10,10 +16,6 @@
 {/form}
 
 {if $hospitalizace != NULL}
-    <br>
-    {if $user->isInRole('lekar')}
-    <a n:href="Pacient:all" class="icon edit">Přidat hospitalizaci</a>
-    {/if}
     <br>
     <table>
         <thead>

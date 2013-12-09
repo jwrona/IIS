@@ -2,5 +2,24 @@
 
 <h1 n:block="title">Nová hospitalizace</h1> 
 
+<h2>{$pacient->jmeno} {$pacient->prijmeni}</h2>
 
-    {/block}
+{form addHospitalizaceForm}
+    <div>
+        {control $form errors}
+
+        <div>
+            {label datumPrijeti /}
+            <div class="input">{input datumPrijeti}<span class="req">*</span> (rrrr-mm-dd)</div>
+        </div>
+        <div>
+            {label zkratkaOdd /}
+            <div class="input">{input zkratkaOdd}</div>
+        </div>
+        <div>
+            {label set /}
+            <div class="submitt">{input set}</div>
+        </div>
+    {/form}
+
+{/block}

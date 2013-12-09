@@ -75,21 +75,20 @@ class HospitalizaceRepository extends Repository {
                 )->fetch();
     }
 
-    public function updateHospitalizace() {
-        $this->findBy(array('IDzamestnance' => $IDzamestnance))->update(
-                array('jmeno' => $jmeno,
-                    'prijmeni' => $prijmeni,
-                    'username' => $username,
-                    'zkratkaOdd' => $zkratkaOdd));
-    }
+//    public function updateHospitalizace() {
+//        $this->findBy(array('IDzamestnance' => $IDzamestnance))->update(
+//                array('jmeno' => $jmeno,
+//                    'prijmeni' => $prijmeni,
+//                    'username' => $username,
+//                    'zkratkaOdd' => $zkratkaOdd));
+//    }
 
-    public function addHospitalizace() {
+    public function addHospitalizace($rodneCislo, $zkratkaOdd, $datumPrijeti, $IDlekare) {
         $this->getTable()->insert(array(
-            'jmeno' => $jmeno,
-            'prijmeni' => $prijmeni,
-            'username' => $username,
-            'password' => $password,
-            'role' => $role));
+            'rodneCislo' => $rodneCislo,
+            'zkratkaOdd' => $zkratkaOdd,
+            'datumPrijeti' => $datumPrijeti,
+            'IDLekare' => $IDlekare));
     }
 
 }

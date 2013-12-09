@@ -1,11 +1,12 @@
 <?php
 
-use Nette\Application\UI;
+use Nette\Application\UI\Form;
 
 class HospitalizacePresenter extends BasePresenter {
 
     private $hospitalizaceRepository;
     protected $oddeleniRepository;
+    protected $pacientRepository;
 
     protected function startup() {
         parent::startup();
@@ -13,6 +14,7 @@ class HospitalizacePresenter extends BasePresenter {
 
         $this->hospitalizaceRepository = $this->context->hospitalizaceRepository;
         $this->oddeleniRepository = $this->context->oddeleniRepository;
+        $this->pacientRepository = $this->context->pacientRepository;
     }
 
     public function renderDefault($zkratkaOdd) {
@@ -20,12 +22,9 @@ class HospitalizacePresenter extends BasePresenter {
             if ($this->getUser()->isinRole('lekar')) {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekareZkratkaOdd(
                         $this->getUser()->getIdentity()->getId(), $zkratkaOdd);
-            }
-            elseif ($this->getUser()->isinRole('sestra')) {
+            } elseif ($this->getUser()->isinRole('sestra')) {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
-            }
-            else
-            {
+            } else {
                 $this->template->hospitalizace = $this->hospitalizaceRepository->findByZkratkaOdd($zkratkaOdd);
             }
         } else {
@@ -41,11 +40,16 @@ class HospitalizacePresenter extends BasePresenter {
     }
 
     public function renderAdd($rodneCislo) {
+        $this->template->pacient = $this->pacientRepository->findByRodneCislo($rodneCislo);
         //$this->template->hospitalizace = $this->hospitalizaceRepository->findByIDlekare($this->getUser()->getIdentity()->getId());
+        $addHospitalizaceForm = $this['addHospitalizaceForm'];
+        $addHospitalizaceForm->setDefaults(array(
+            'rodneCislo' => $rodneCislo
+        ));
     }
 
     protected function createComponentSelectHospitalizaceForm() {
-        $form = new UI\Form;
+        $form = new Form();
 
         if ($this->getUser()->isinRole('lekar')) {
             $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId());
@@ -65,9 +69,31 @@ class HospitalizacePresenter extends BasePresenter {
         return $form;
     }
 
-    public function selectHospitalizaceFormSubmitted(UI\Form $form) {
+    public function selectHospitalizaceFormSubmitted(Form $form) {
         $values = $form->getValues();
         $this->redirect('this', $values->oddeleni);
+    }
+
+    protected function createComponentAddHospitalizaceForm() {
+        $form = new Form();
+
+        if ($this->getUser()->isinRole('lekar')) {
+            $oddeleni = $this->oddeleniRepository->findPairsZkratkaOddNazevIDzamestnance($this->getUser()->getIdentity()->getId());
+        }
+        $form->addHidden('rodneCislo');
+        $form->addSelect('zkratkaOdd', 'Oddělení', $oddeleni)
+                ->setPrompt("Zvolte oddělení");
+        $form->addText('datumPrijeti', 'Datum přijetí')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+        $form->addSubmit('set', 'Hospitalizovat');
+        $form->onSuccess[] = callback($this, 'addHospitalizaceFormSubmitted');
+        return $form;
+    }
+
+    public function addHospitalizaceFormSubmitted(Form $form) {
+        $value = $form->getValues();
+        $this->hospitalizaceRepository->addHospitalizace($value->rodneCislo, $value->zkratkaOdd, $value->datumPrijeti, $this->getUser()->getIdentity()->getId());
+        $this->redirect('Hospitalizace:');
     }
 
 }

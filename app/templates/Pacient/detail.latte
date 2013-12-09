@@ -7,15 +7,16 @@
 <b>Rodné číslo: </b>{$pacient->rodneCislo}<br>
 </p>
 <p>
-{if $hospitalizovan}
-<b>Aktuálně hospitalizován</b>
-{else}
-<b>Aktuálně nehospitalizován</b>
-{/if}
+    {if $hospitalizovan}
+        <b>Aktuálně hospitalizován</b>
+    {else}
+        <b>Aktuálně nehospitalizován</b>
+    {/if}
 </p>
 <p>
-<b>Celkový počet hospitalizací: </b>{$pocetHospitalizaci}<br>
+    <b>Celkový počet hospitalizací: </b>{$pocetHospitalizaci}<br>
 </p>
-<a n:href="Pacient:edit $pacient->rodneCislo" class="icon edit">Upravit</a>
-
+{if $user->isInRole('lekar') or $user->isInRole('administrator')}
+    <a n:href="Pacient:edit $pacient->rodneCislo" class="icon edit">Upravit</a>
+{/if}
 {/block}
