@@ -9,6 +9,10 @@
 <br>
 <b>Ošetřující lékař: </b>{$lekar->jmeno} {$lekar->prijmeni}<br>
 
+{if $user->isInRole('lekar')}
+<br><a n:href="Hospitalizace:propustit $hospitalizace" class="icon edit">Propustit pacienta</a><br>
+{/if}
+
 <h2>Léky</h2>
 <table>
     <thead>
@@ -58,4 +62,5 @@
 {if $user->isInRole('lekar')}
 <a n:href="Vysetreni:add $pacient->rodneCislo" class="icon edit">Přidat vyšetření</a>
 {/if}
+
 {/block}
