@@ -2,8 +2,6 @@
 
 namespace Todo;
 
-use Nette;
-
 class HospitalizaceRepository extends Repository {
 
     public function findAllHospitalizace() {
@@ -24,7 +22,7 @@ class HospitalizaceRepository extends Repository {
         return $this->connection->query(
                         'SELECT *
                          FROM hospitalizace, pacient
-                         WHERE ' . $IDlekare . ' = hospitalizace.IDlekare AND hospitalizace.rodneCislo = pacient.rodneCislo'
+                         WHERE ' . $IDlekare . ' = hospitalizace.IDlekare AND hospitalizace.rodneCislo = pacient.rodneCislo AND hospitalizace..datumPropusteni IS NULL'
         );
     }
 
@@ -34,7 +32,7 @@ class HospitalizaceRepository extends Repository {
                          FROM hospitalizace, pacient
                          WHERE ' . $IDlekare . ' = hospitalizace.IDlekare '
                         . ' AND hospitalizace.rodneCislo = pacient.rodneCislo'
-                        . ' AND "' . $zkratkaOdd . '" = hospitalizace.zkratkaOdd'
+                        . ' AND "' . $zkratkaOdd . '" = hospitalizace.zkratkaOdd  AND hospitalizace.datumPropusteni IS NULL'
         );
     }
 
@@ -64,8 +62,8 @@ class HospitalizaceRepository extends Repository {
                          WHERE ' . $IDhospitalizace . ' = hospitalizace.IDhospitalizace '
                         . ' AND hospitalizace.rodneCislo = pacient.rodneCislo'
                 )->fetch();
-    } 
-    
+    }
+
     public function findLekar($IDhospitalizace) {
         return $this->connection->query(
                         'SELECT *
@@ -76,11 +74,18 @@ class HospitalizaceRepository extends Repository {
     }
 
     public function addHospitalizace($rodneCislo, $zkratkaOdd, $datumPrijeti, $IDlekare) {
-       return $this->getTable()->insert(array(
-            'rodneCislo' => $rodneCislo,
-            'zkratkaOdd' => $zkratkaOdd,
-            'datumPrijeti' => $datumPrijeti,
-            'IDLekare' => $IDlekare));
+        return $this->getTable()->insert(array(
+                    'rodneCislo' => $rodneCislo,
+                    'zkratkaOdd' => $zkratkaOdd,
+                    'datumPrijeti' => $datumPrijeti,
+                    'IDLekare' => $IDlekare));
+    }
+
+    public function propustitPacienta($IDhospitalizace) {
+        return $this->connection->query(
+                        'UPDATE hospitalizace ' .
+                        'SET datumPropusteni = now() ' .
+                        'WHERE IDhospitalizace = ' . $IDhospitalizace);
     }
 
 }

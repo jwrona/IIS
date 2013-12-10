@@ -33,6 +33,7 @@ class HospitalizacePresenter extends BasePresenter {
     }
 
     public function renderDetail($IDhospitalizace) {
+        $this->template->hospitalizace = $IDhospitalizace;
         $this->template->leky = $this->hospitalizaceRepository->findLeky($IDhospitalizace);
         $this->template->vysetreni = $this->hospitalizaceRepository->findVysetreni($IDhospitalizace);
         $this->template->pacient = $this->hospitalizaceRepository->findPacient($IDhospitalizace);
@@ -46,6 +47,16 @@ class HospitalizacePresenter extends BasePresenter {
         $addHospitalizaceForm->setDefaults(array(
             'rodneCislo' => $rodneCislo
         ));
+    }
+
+    public function actionPropustit($IDhospitalizace) {
+        try {
+             $this->hospitalizaceRepository->propustitPacienta($IDhospitalizace);
+        } catch (Exception $ex) {
+            $this->flashMessage('Pacient nebyl propušťen.', 'error');
+        }
+        $this->flashMessage('Pacient byl propušťen.', 'success');
+        $this->redirect('Hospitalizace:');
     }
 
     protected function createComponentSelectHospitalizaceForm() {
