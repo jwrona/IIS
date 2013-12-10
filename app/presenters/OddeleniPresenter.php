@@ -53,7 +53,7 @@ class OddeleniPresenter extends BasePresenter {
         try {
             $this->oddeleniRepository->addOddeleni($values->zkratkaOdd, $values->nazev);
         } catch (Exception $exc) {
-            $this->flashMessage('Chyba - Oddělení nebylo přidáno.', 'error');
+            $this->flashMessage('Chyba - Oddělení nebylo přidáno. Oddělení s touto zkratkou pravděpodobně již existuje.', 'error');
             return;
         }
         $this->flashMessage('Oddělení bylo přidáno.', 'success');

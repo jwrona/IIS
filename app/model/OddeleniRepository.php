@@ -14,14 +14,14 @@ class OddeleniRepository extends Repository {
                                  WHERE ' . $IDlekare . ' = uvazek.IDlekare AND uvazek.zkratkaOdd = oddeleni.zkratkaOdd AND oddeleni.erased = 0'
                 )->fetchPairs('zkratkaOdd', 'nazev');
     }
-    
+
     public function findPairsZkratkaOddNazevIDsestry($IDsestry) {
         return $this->connection->query(
                         'SELECT zamestnanec.zkratkaOdd, oddeleni.nazev 
                                  FROM oddeleni, zamestnanec
                                  WHERE ' . $IDsestry . ' = zamestnanec.IDzamestnance '
-                                         . 'AND oddeleni.zkratkaOdd = zamestnanec.zkratkaOdd '
-                                         . 'AND oddeleni.erased = 0'
+                        . 'AND oddeleni.zkratkaOdd = zamestnanec.zkratkaOdd '
+                        . 'AND oddeleni.erased = 0'
                 )->fetchPairs('zkratkaOdd', 'nazev');
     }
 
@@ -38,9 +38,17 @@ class OddeleniRepository extends Repository {
     }
 
     public function addOddeleni($zkratkaOdd, $nazev) {
-        $this->getTable()->insert(array(
-            'zkratkaOdd' => $zkratkaOdd,
-            'nazev' => $nazev));
+        if (0 < $this->connection->query(
+                        'SELECT oddeleni.zkratkaOdd 
+                         FROM oddeleni
+                         WHERE "' . $zkratkaOdd . '" = oddeleni.zkratkaOdd AND oddeleni.erased = 1')->rowCount()) 
+        {
+            $this->findAll()->where('zkratkaOdd', $zkratkaOdd)->update(array('erased' => 0, 'nazev' => $nazev));
+        } else {
+            $this->getTable()->insert(array(
+                'zkratkaOdd' => $zkratkaOdd,
+                'nazev' => $nazev));
+        }
     }
 
     public function updateOddeleni($zkratkaOdd, $nazev) {
