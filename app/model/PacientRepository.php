@@ -63,10 +63,10 @@ class PacientRepository extends Repository {
                         'SELECT pacient.rodneCislo 
                          FROM pacient
                          WHERE "' . $rc . '" = pacient.rodneCislo '
-                        . ' AND pacient.erased = 1 '
-                        . ' AND "' . $jmeno . '" = pacient.jmeno'
-                        . ' AND "' . $prijmeni . '" = pacient.prijmeni')->rowCount()) {
-            $this->findAll()->where('rodneCislo', $rc)->update(array('erased' => 0));
+                        . ' AND pacient.erased = 1 ')->rowCount()) {
+            $this->findAll()->where('rodneCislo', $rc)->update(array('erased' => 0,
+                'jmeno' => $jmeno,
+                'prijmeni' => $prijmeni));
         } else {
             $this->getTable()->insert(array(
                 'jmeno' => $jmeno,
