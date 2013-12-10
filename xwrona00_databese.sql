@@ -159,9 +159,9 @@ INSERT INTO `xwrona00`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni
 ('bobko0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Petra', 'Bobkova', 'sestra', 'JIP');
 
 -- Hospitalizace
-INSERT INTO `xwrona00`.`hospitalizace` (`datumPrijeti`, `datumPropusteni`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
-('2013-02-08', '2013-02-15', 'ARO', 2, '1305061122'),
-('2013-03-08', '2013-02-15', 'JIP', 3, '4505061122');
+INSERT INTO `xwrona00`.`hospitalizace` (`datumPrijeti`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
+('2013-02-08', 'ARO', 2, '1305061122'),
+('2013-03-08', 'JIP', 3, '4505061122');
 
 -- Uvazek
 INSERT INTO `xwrona00`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvazku`) VALUES

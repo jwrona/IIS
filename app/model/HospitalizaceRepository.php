@@ -82,10 +82,11 @@ class HospitalizaceRepository extends Repository {
     }
 
     public function propustitPacienta($IDhospitalizace) {
-        return $this->connection->query(
+        /*return $this->connection->query(
                         'UPDATE hospitalizace ' .
                         'SET datumPropusteni = now() ' .
-                        'WHERE IDhospitalizace = ' . $IDhospitalizace);
+                        'WHERE IDhospitalizace = ' . $IDhospitalizace);*/
+        $this->findAll()->where('IDhospitalizace', $IDhospitalizace)->delete();
     }
 
 }
