@@ -20,14 +20,14 @@
 	<dt>Autoøi</dt>
 	<dd>Jaromír Deák<!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xdeakj01@stud.fit.vutbr.cz">xdeakj01@stud.fit.vutbr.cz</a> -
-		neco
+		sekce pro správu hospitalizací, lékù, zamìstnantcù a oddìlení
 	</dd>
 	<dd>Jan Wrona<!-- Nahraïte skuteèným jménem a e-mailem autora a popisem èinnosti -->
 	    <a href="mailto:xwrona00@stud.fit.vutbr.cz">xwrona00@stud.fit.vutbr.cz</a> - 
-		nic moc
+		sekce pro správu pacientù, menu
 	</dd>
 	<dt>URL aplikace</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xwrona00/IIS">http://www.stud.fit.vutbr.cz/~xwrona00/IIS</a></dd>
 </dl>
 
 <h2>U¾ivatelé systému pro testování</h2>
@@ -77,6 +77,13 @@ jsou volány po vyvolání dané akce viewerem.
 V projektu je pou¾it externí plugin pro usnadnìní tvorby menu dostupný <a
 href="http://addons.nette.org/cs/menu">zde</a>.
 </p>
+<p>
+Zmìny v databázi: slouèení tabulek "lekar" a "sestra" do jedné tabulky
+"zamestnanec", která obsahuje roli zamìstnance v systému. Pokud informaèní
+systém umo¾òuje smazání záznamu z databáza, ve skuteènosti se záznam nesma¾e
+ale nastaví se novì pøidaný atribut "erased", pomocí kterého se záznam zobrazí
+nebo ne.
+</p>
 
 <h2>Instalace</h2>
 <ul>
@@ -89,10 +96,6 @@ database.sql</li>
 
 <h2>Známé problémy</h2>
 <p>
-Zde popi¹te, které body zadání (IDS a IIS) nejsou implementovány a z jakého
-dùvodu. Napø. &#8222;Z èasových dùvodù nebyla implementována správa
-u¾ivatelù.&#8221; Pomù¾ete tím zrychlit opravování, kdy¾ neimplementované
-funkce nebudeme muset dlouze hledat.
 </p>
 </body>
 </html>
