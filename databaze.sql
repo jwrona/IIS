@@ -1,7 +1,8 @@
 -- ---------------------------------------------------------------------------
 -- Vytvoreni databaze
 -- ---------------------------------------------------------------------------
-CREATE DATABASE `nemocnice`  DEFAULT CHARSET=utf8;
+DROP DATABASE `xwrona00`;
+CREATE DATABASE `xwrona00`  DEFAULT CHARSET=utf8;
 
 -- ---------------------------------------------------------------------------
 -- Vytvoreni tabulek v databazi
@@ -15,8 +16,8 @@ CREATE DATABASE `nemocnice`  DEFAULT CHARSET=utf8;
 -- jako cizi klic, protoze v pripade zaznamu lekar/administrator je nulovy
 
 -- Zamestnanec
-DROP TABLE IF EXISTS `nemocnice`.`zamestnanec`;
-CREATE TABLE `nemocnice`.`zamestnanec` (
+DROP TABLE IF EXISTS `xwrona00`.`zamestnanec`;
+CREATE TABLE `xwrona00`.`zamestnanec` (
   `IDzamestnance` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` char(6),
   `password` char(60),
@@ -30,17 +31,18 @@ CREATE TABLE `nemocnice`.`zamestnanec` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Pacient
-DROP TABLE IF EXISTS `nemocnice`.`pacient`;
-CREATE TABLE `nemocnice`.`pacient` (
+DROP TABLE IF EXISTS `xwrona00`.`pacient`;
+CREATE TABLE `xwrona00`.`pacient` (
   `rodneCislo` char(11) NOT NULL,
   `jmeno` varchar(50) NOT NULL,
   `prijmeni` varchar(50) NOT NULL,
+  `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`rodneCislo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Oddeleni
-DROP TABLE IF EXISTS `nemocnice`.`oddeleni`;
-CREATE TABLE `nemocnice`.`oddeleni` (
+DROP TABLE IF EXISTS `xwrona00`.`oddeleni`;
+CREATE TABLE `xwrona00`.`oddeleni` (
   `zkratkaOdd` char(3) NOT NULL,
   `nazev` varchar(100) NOT NULL,
   `erased` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -48,8 +50,8 @@ CREATE TABLE `nemocnice`.`oddeleni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Lek
-DROP TABLE IF EXISTS `nemocnice`.`lek`;
-CREATE TABLE `nemocnice`.`lek` (
+DROP TABLE IF EXISTS `xwrona00`.`lek`;
+CREATE TABLE `xwrona00`.`lek` (
   `IDleku` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nazev` varchar(50) NOT NULL,
   `pouziti` varchar(100) NOT NULL,
@@ -61,8 +63,8 @@ CREATE TABLE `nemocnice`.`lek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Hospitalizace
-DROP TABLE IF EXISTS `nemocnice`.`hospitalizace`;
-CREATE TABLE `nemocnice`.`hospitalizace` (
+DROP TABLE IF EXISTS `xwrona00`.`hospitalizace`;
+CREATE TABLE `xwrona00`.`hospitalizace` (
   `IDhospitalizace` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `datumPrijeti` date NOT NULL,
   `datumPropusteni` date,
@@ -77,8 +79,8 @@ CREATE TABLE `nemocnice`.`hospitalizace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Uvazek
-DROP TABLE IF EXISTS `nemocnice`.`uvazek`;
-CREATE TABLE `nemocnice`.`uvazek` (
+DROP TABLE IF EXISTS `xwrona00`.`uvazek`;
+CREATE TABLE `xwrona00`.`uvazek` (
   `IDlekare` int(10) unsigned NOT NULL,
   `zkratkaOdd` varchar(50) NOT NULL,
   `telefon` char(9) NOT NULL,
@@ -89,8 +91,8 @@ CREATE TABLE `nemocnice`.`uvazek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Vysetreni
-DROP TABLE IF EXISTS `nemocnice`.`vysetreni`;
-CREATE TABLE `nemocnice`.`vysetreni` (
+DROP TABLE IF EXISTS `xwrona00`.`vysetreni`;
+CREATE TABLE `xwrona00`.`vysetreni` (
   `IDvysetreni` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `CasProvedeni` date NOT NULL,
   `vysledek` varchar(100),
@@ -105,8 +107,8 @@ CREATE TABLE `nemocnice`.`vysetreni` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Podani Leku
-DROP TABLE IF EXISTS `nemocnice`.`podaniLeku`;
-CREATE TABLE `nemocnice`.`podaniLeku` (
+DROP TABLE IF EXISTS `xwrona00`.`podaniLeku`;
+CREATE TABLE `xwrona00`.`podaniLeku` (
   `IDpodaniLeku` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `zacatekPodani` date NOT NULL,
   `konecPodani` date,
@@ -128,51 +130,51 @@ CREATE TABLE `nemocnice`.`podaniLeku` (
 -- TODO opravit datumy tak, aby vkládaly hodnotu místo nul
 
 -- Administrator
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
+INSERT INTO `xwrona00`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
 ('admin0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Admin', 'Administrator', 'administrator');
 
 -- Pacient
-INSERT INTO `nemocnice`.`pacient` (`rodneCislo`, `jmeno`, `prijmeni`) VALUES
+INSERT INTO `xwrona00`.`pacient` (`rodneCislo`, `jmeno`, `prijmeni`) VALUES
 ('1305061122', 'Stepan', 'Slavicek'),
 ('4505061122', 'Martin', 'Pisin');
 
 -- Lekar
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
+INSERT INTO `xwrona00`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`) VALUES
 ('rusek0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW','Jan', 'Rusek', 'lekar'),
 ('malym0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Michal', 'Maly', 'lekar');
 
 -- Oddeleni
-INSERT INTO `nemocnice`.`oddeleni` (`zkratkaOdd`, `nazev`) VALUES
+INSERT INTO `xwrona00`.`oddeleni` (`zkratkaOdd`, `nazev`) VALUES
 ('ARO', 'Anesteziologicko-resuscitacni oddeleni'),
 ('JIP', 'Jednotka intenzivni pece');
 
 -- Lek
-INSERT INTO `nemocnice`.`lek` (`nazev`, `pouziti`, `zpusobPodani`, `ucinnaLatka`, `sila`, `kontraindikace`) VALUES
+INSERT INTO `xwrona00`.`lek` (`nazev`, `pouziti`, `zpusobPodani`, `ucinnaLatka`, `sila`, `kontraindikace`) VALUES
 ('Morfin', 'bolesti', 'nitrozilne, oralne', 'Morfium', 200, 'Lorem ipsum'),
 ('Ibalgin', 'horecka', 'analne, oralne', 'Ibuprofen', 500, 'Ipsum lorem');
 
 -- Sestra
-INSERT INTO `nemocnice`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`, `zkratkaOdd`) VALUES
+INSERT INTO `xwrona00`.`zamestnanec` (`username`, `password`, `jmeno`, `prijmeni`, `role`, `zkratkaOdd`) VALUES
 ('kodyt0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Marta', 'Kodytkova', 'sestra', 'ARO'),
 ('bobko0', '$2a$07$hn9edyker6dj0gxi4dqu0utddnn77xn6y1vDEtVX4gO998t2SwTvW', 'Petra', 'Bobkova', 'sestra', 'JIP');
 
 -- Hospitalizace
-INSERT INTO `nemocnice`.`hospitalizace` (`datumPrijeti`, `datumPropusteni`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
-('2013-02-08', '2013-02-15', 'ARO', 2, '1305061122'),
-('2013-03-08', '2013-02-15', 'JIP', 3, '4505061122');
+INSERT INTO `xwrona00`.`hospitalizace` (`datumPrijeti`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
+('2013-02-08', 'ARO', 2, '1305061122'),
+('2013-03-08', 'JIP', 3, '4505061122');
 
 -- Uvazek
-INSERT INTO `nemocnice`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvazku`) VALUES
+INSERT INTO `xwrona00`.`uvazek` (`IDlekare`, `zkratkaOdd`, `telefon`, `roleUvazku`) VALUES
 (2,'ARO','777666555','Plny'),
 (3,'JIP','777666444','Polovicni');
 
 -- Vysetreni
-INSERT INTO `nemocnice`.`vysetreni` (`CasProvedeni`, `vysledek`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
+INSERT INTO `xwrona00`.`vysetreni` (`CasProvedeni`, `vysledek`, `zkratkaOdd`, `IDlekare`, `rodneCislo`) VALUES
 ('2013-02-08','Lorem ipsum generator','ARO',2,'1305061122'),
 ('2013-02-12','Ipsum lorem generator','JIP',3,'4505061122');
 
 -- Podani leku
-INSERT INTO `nemocnice`.`podaniLeku` (`zacatekPodani`, `konecPodani`, `mnozstvi`, `opakovaniDenne`, `zpusobPodani`, `rodneCislo`, `IDleku`) VALUES
+INSERT INTO `xwrona00`.`podaniLeku` (`zacatekPodani`, `konecPodani`, `mnozstvi`, `opakovaniDenne`, `zpusobPodani`, `rodneCislo`, `IDleku`) VALUES
 ('2013-02-08','2013-02-15',3,1,'oralne','1305061122',1),
 ('2013-02-11','2013-03-31',6,3,'analne','1305061122',1);
 
