@@ -98,9 +98,9 @@ class LekPresenter extends BasePresenter {
         $form->addHidden('IDleku');
         $form->addHidden('rodneCislo');
         $form->addText('zacatekPodani', 'Od')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
-                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-9]-{1}[0-3][0-9]');
         $form->addText('konecPodani', 'Do')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
-                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-9]-{1}[0-3][0-9]');
         $form->addText('mnozstvi', 'Množství')->addRule(Form::PATTERN, 'Celé číslo', '[0-9]*');
         $form->addText('opakovaniDenne', 'Opakování za den')->addRule(Form::PATTERN, 'Celé číslo', '[0-9]*');
         $form->addText('zpusobPodani', 'Způsob podání');

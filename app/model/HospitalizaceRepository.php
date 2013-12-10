@@ -64,8 +64,8 @@ class HospitalizaceRepository extends Repository {
                          WHERE ' . $IDhospitalizace . ' = hospitalizace.IDhospitalizace '
                         . ' AND hospitalizace.rodneCislo = pacient.rodneCislo'
                 )->fetch();
-    }
-
+    } 
+    
     public function findLekar($IDhospitalizace) {
         return $this->connection->query(
                         'SELECT *
@@ -75,16 +75,8 @@ class HospitalizaceRepository extends Repository {
                 )->fetch();
     }
 
-//    public function updateHospitalizace() {
-//        $this->findBy(array('IDzamestnance' => $IDzamestnance))->update(
-//                array('jmeno' => $jmeno,
-//                    'prijmeni' => $prijmeni,
-//                    'username' => $username,
-//                    'zkratkaOdd' => $zkratkaOdd));
-//    }
-
     public function addHospitalizace($rodneCislo, $zkratkaOdd, $datumPrijeti, $IDlekare) {
-        $this->getTable()->insert(array(
+       return $this->getTable()->insert(array(
             'rodneCislo' => $rodneCislo,
             'zkratkaOdd' => $zkratkaOdd,
             'datumPrijeti' => $datumPrijeti,
