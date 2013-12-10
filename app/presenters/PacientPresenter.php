@@ -196,7 +196,7 @@ class PacientPresenter extends BasePresenter {
     }
 
     /**
-     * Hospitalizace pacienta
+     * Vyšetření pacienta
      */
     public function actionAddVysetreni($rodneCislo) {
         $this->redirect('all', $rodneCislo);

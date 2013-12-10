@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0067)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+    
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+<style type="text/css"></style></head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
+
+<h1>Název zadání</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Jaromír Deák<!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xdeakj01@stud.fit.vutbr.cz">xdeakj01@stud.fit.vutbr.cz</a> -
+		neco
+	</dd>
+	<dd>Jan Wrona<!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xwrona00@stud.fit.vutbr.cz">xwrona00@stud.fit.vutbr.cz</a> - 
+		nic moc
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<table>
+<tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin0</td><td>qwertz</td><td>Administrátor</td></tr>
+<tr><td>rusek0</td><td>qwertz</td><td>Lékař</td></tr>
+<tr><td>kodyt0</td><td>qwertz</td><td>Zdravodní sestra</td></tr>
+</tbody></table>
+
+<h2>Implementace</h2>
+<p>
+Projekt je realizován s pomocí frameworku <a href="http://nette.org/">Nette
+Framework 2.0.13</a>. Nette využívá architekturu MVP (Model-View-Presenter).
+Jednotlivé prvky architektury jsou rozděleny do aresářů model/, templates/ a
+presenters/.
+</p>
+<p>
+Soubory modelu mají názvy ve tvaru jmenoRepository.php a jsou v nich umístěny
+stejně pojmenované třídy jejichž metody zajišťují přístup do databáze. Lze zde
+najít funkce Nette implementující automatickou tvorbu SQL dotazu tak i tak i
+přímé SQL dotazy využité především pro specifičtější dotazy a operace nad více
+tabulkama. V souboru Authencicator.php se nachází třída Authenticator, která
+přihlášení uživatelů, jejich rolí, změnu a hashování přihlašovacího hesla.
+</p>
+<p>
+View (templates) jsou soubory s koncovkou .latte a jsou rozmístěny dle
+využití do podadresářů. Jejich smyslem je zobrazování obsahu a jejich úkolem je
+zobrazení obsahu. Jedná se o HTML soubory s využitím <a
+href="http://doc.nette.org/cs/default-macros">Latte maker</a>. Ty jsou využita
+například k ovlivnění zobrazovaného obsahu stránky dle role přihlášeného
+uživatele a podobně. 
+</p>
+<p>
+Předchozí části architektury spojuje dohromady presenter. Ten má název ve tvaru
+jmenoPresenter.php. Nejprve na základě požadavku od uživatele (např.
+hypertextový ve view) vyvolá příslušnou akci modelu (získá či upraví databázová
+data) a za pomoci viuw vykreslí výsledek. Každý soubor presenteru obsahuje
+stejně pojmenovanou třídu a obsahuje několik duhů metod. Metody s předponou
+render jsou volány před vykreslením stránky a je v nich možné například předat
+data k zobrazení do view. Metody s předponou createComponent jsou určeny pro
+tvorbu <a href="http://doc.nette.org/cs/components">komponent</a> a v našem
+projektu jsou využity především pro tvorbu formulářů. Metody s předponou action
+jsou volány po vyvolání dané akce viewerem.
+</p>
+<p>
+V projektu je použit externí plugin pro usnadnění tvorby menu dostupný <a
+href="http://addons.nette.org/cs/menu">zde</a>.
+</p>
+
+<h2>Instalace</h2>
+<ul>
+<li>Stručně popište postup instalace na server</li>
+<li>Softwarové požadavky: PHP 5.2.0 a vyšší</li>
+<li>Databázový skript s názvem database.sql se nachází v root adresáři
+odevzdaných souborů a jeho vyvolání lze provést příkazem $mysql db_name &lt;
+database.sql</li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p>
+Zde popište, které body zadání (IDS a IIS) nejsou implementovány a z jakého
+důvodu. Např. &#8222;Z časových důvodů nebyla implementována správa
+uživatelů.&#8221; Pomůžete tím zrychlit opravování, když neimplementované
+funkce nebudeme muset dlouze hledat.
+</p>
+</body>
+</html>
