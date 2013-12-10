@@ -82,9 +82,10 @@ class HospitalizacePresenter extends BasePresenter {
         }
         $form->addHidden('rodneCislo');
         $form->addSelect('zkratkaOdd', 'Oddělení', $oddeleni)
+                ->addRule(Form::FILLED, 'Vybrat oddělení, kde má být pacient hospitalizován.')
                 ->setPrompt("Zvolte oddělení");
         $form->addText('datumPrijeti', 'Datum přijetí')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
-                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-9]-{1}[0-3][0-9]');
         $form->addSubmit('set', 'Hospitalizovat');
         $form->onSuccess[] = callback($this, 'addHospitalizaceFormSubmitted');
         return $form;
@@ -92,8 +93,8 @@ class HospitalizacePresenter extends BasePresenter {
 
     public function addHospitalizaceFormSubmitted(Form $form) {
         $value = $form->getValues();
-        $this->hospitalizaceRepository->addHospitalizace($value->rodneCislo, $value->zkratkaOdd, $value->datumPrijeti, $this->getUser()->getIdentity()->getId());
-        $this->redirect('Hospitalizace:');
+        $hospitalizace = $this->hospitalizaceRepository->addHospitalizace($value->rodneCislo, $value->zkratkaOdd, $value->datumPrijeti, $this->getUser()->getIdentity()->getId());
+        $this->redirect('Hospitalizace:detail', $hospitalizace->IDhospitalizace);
     }
 
 }

@@ -29,7 +29,7 @@ class VysetreniPresenter extends BasePresenter {
         $form->addHidden('rodneCislo');        
         $form->addSelect('oddeleni', 'Oddělení', $this->oddeleniRepository->findPairsZkratkaOddNazev());
         $form->addText('CasProvedeni', 'Datum')->addRule(Form::FILLED, 'Je nutné vyplnit datum.')
-                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-2]-{1}[0-3][0-9]');
+                ->addRule(Form::PATTERN, 'Datum ve tvaru rrrr-mm-dd', '[0-9][0-9][0-9][0-9]-{1}[0-1][0-9]-{1}[0-3][0-9]');
         $form->addText('vysledek', 'Výsledek');
         $form->addSubmit('set', 'Uložit');
         $form->onSuccess[] = $this->AddVysetreniFormSubmitted;
